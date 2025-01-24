@@ -2,7 +2,9 @@
 title: "The SQL Cheat Sheet"
 ---
 
-# Learn SQL Basics
+*The following overview is based on several [datacamp](https://app.datacamp.com/) courses and own research.*
+
+# SQL Basics
 
 Definition: A relational database defines relationships between tables of data inside the database.  
 Possibly the biggest advantage of a database is that many users can write queries to gather insights from the data at the same time. When a database is queried, the data stored inside the database does not change: rather, the database information is accessed and presented according to instructions in the query.  
