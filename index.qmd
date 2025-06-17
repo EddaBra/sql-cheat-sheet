@@ -6,75 +6,72 @@ title: "The SQL Cheat Sheet"
 
 # SQL Basics
 
-Definition: A relational database defines relationships between tables of data inside the database.  
-Possibly the biggest advantage of a database is that many users can write queries to gather insights from the data at the same time. When a database is queried, the data stored inside the database does not change: rather, the database information is accessed and presented according to instructions in the query.  
+Definition: A relational database defines relationships between tables of data inside the database.\
+Possibly the biggest advantage of a database is that many users can write queries to gather insights from the data at the same time. When a database is queried, the data stored inside the database does not change: rather, the database information is accessed and presented according to instructions in the query.\
 SQL, or S-Q-L, is short for Structured Query Language. It is the most widely used programming language for creating, querying, and updating relational databases.
 
-`rows = records` holds data of an individual observation  
-`column = fields` holds one piece of information about all records, same data type in one field like number, text or date for example. We use data types for several reasons. First, different types of data are stored differently and take up different amounts of storage space. Second, some operations only apply to certain data types. It makes sense to multiply a number by another number, but it does not make sense to multiply text by other text for example. Types are string, integers or floats. The NUMERIC data type can store floats which have up to 38 digits total - including those before and after the decimal point.  
-*unique identifier ("key")*, identify records in a table to identify this record, often a number, often at the leftest of the table  
-*query* request from data from a database.   
-*schema ("blue prints")*, shows a database's design, such as what tables are included in the database and any relationships between its tables. A schema also lets the reader know what data type each field can hold.  
+`rows = records` holds data of an individual observation\
+`column = fields` holds one piece of information about all records, same data type in one field like number, text or date for example. We use data types for several reasons. First, different types of data are stored differently and take up different amounts of storage space. Second, some operations only apply to certain data types. It makes sense to multiply a number by another number, but it does not make sense to multiply text by other text for example. Types are string, integers or floats. The NUMERIC data type can store floats which have up to 38 digits total - including those before and after the decimal point.\
+*unique identifier ("key")*, identify records in a table to identify this record, often a number, often at the leftest of the table\
+*query* request from data from a database.\
+*schema ("blue prints")*, shows a database's design, such as what tables are included in the database and any relationships between its tables. A schema also lets the reader know what data type each field can hold.
 
+```{=html}
 <img src="learn-sql-figures/schema.png"
      alt="Schema"
      width="400"/>
+```
 
-**Good table names manners**
-table name: lowercase,no spaces `_` instead, plural or collective group name  
-field name: lowercase, no spaces, singular, unique in a table.  
+**Good table names manners** table name: lowercase,no spaces `_` instead, plural or collective group name\
+field name: lowercase, no spaces, singular, unique in a table.\
 Having more tables, each with a clearly marked subject, is generally better than having fewer tables where information about multiple subjects is combined.
 
 ## Key words
 
-*Keywords* are reserved words used to indicate what operation we'd like our code to perform.  
-*SELECT* keyword indicates which fields should be selected - in this case, the name field.   
-*FROM* keyword indicates the table in which these fields are located - in this case, the patrons table.  
+*Keywords* are reserved words used to indicate what operation we'd like our code to perform.\
+*SELECT* keyword indicates which fields should be selected - in this case, the name field.\
+*FROM* keyword indicates the table in which these fields are located - in this case, the patrons table.\
 End the query with a `;` to indicate it is compete
 
-```
+```         
 SELECT field_name1,field_name2,fieldname_n
 FROM table_name;
 ```
-results called result set, lists all the column information from one table. The sorting of field names does not change the sorting in the results.  
 
-If we want all field names of a table we can use `*`  
+results called result set, lists all the column information from one table. The sorting of field names does not change the sorting in the results.
+
+If we want all field names of a table we can use `*`
 
 ## SQL flavors
 
 SQL has a few different versions, or flavors. Some are free, while others have customer support and are made to complement major databases such as Microsoft's SQL Server or Oracle Database, which are used by many companies. All SQL flavors are used with table-based relational databases like the ones we've seen, and the vast majority of keywords are shared between them! In fact, all SQL flavors must follow universal standards set by the International Organization for Standards and the American National Standards Institute. Only additional features on top of these standards result in different SQL flavors. Think of SQL flavors as dialects of the same language.
 
-**Most popular**  
-**PstgreSQL**  
-- free & open source, created by University of California
--  The name "PostgreSQL" is used to refer to both the database system itself as well as the SQL flavor used with it.
-**SQL Server**
-- free and paid versions
-- SQL Server is also a relational database system which comes in both free and enterprise versions. It was created by Microsoft, so it pairs well with other Microsoft products. T-SQL is Microsoft's proprietary flavor of SQL, used with SQL Server databases.
+**Most popular**\
+**PstgreSQL**\
+- free & open source, created by University of California - The name "PostgreSQL" is used to refer to both the database system itself as well as the SQL flavor used with it. **SQL Server** - free and paid versions - SQL Server is also a relational database system which comes in both free and enterprise versions. It was created by Microsoft, so it pairs well with other Microsoft products. T-SQL is Microsoft's proprietary flavor of SQL, used with SQL Server databases.
 
-### Limit records 
+### Limit records
 
 Limits the records, that are shown.
 
-In PostgreSQL: `SELECT field_name1,field_name2 FROM table_name LIMIT number_records;`  
-In SQL Server: `SELECT TOP(2) field_name1, field_name2 FROM table_name;`  
-
-
+In PostgreSQL: `SELECT field_name1,field_name2 FROM table_name LIMIT number_records;`\
+In SQL Server: `SELECT TOP(2) field_name1, field_name2 FROM table_name;`
 
 ## Quering databases
 
-**Formating**  
-SQL is a generous language when it comes to formatting. New lines, capitalization, and indentation are not required in SQL as they sometimes are in other programming languages. Although, formating is useful to make code more readible and debug it easier. While keyword capitalization and new lines are standard practice, many of the finer details of SQL style are not. For instance, some SQL users prefer to create a new line and indent each selected field when a query selects multiple fields, as the query on this slide does. Because of different styles follow a [style guide](https://www.sqlstyle.guide).  
-Sometimes field names not follows the style guide. If you want to refer to a fieldname with for example a spaces in it use double-quotes.   
-```
+**Formating**\
+SQL is a generous language when it comes to formatting. New lines, capitalization, and indentation are not required in SQL as they sometimes are in other programming languages. Although, formating is useful to make code more readible and debug it easier. While keyword capitalization and new lines are standard practice, many of the finer details of SQL style are not. For instance, some SQL users prefer to create a new line and indent each selected field when a query selects multiple fields, as the query on this slide does. Because of different styles follow a [style guide](https://www.sqlstyle.guide).\
+Sometimes field names not follows the style guide. If you want to refer to a fieldname with for example a spaces in it use double-quotes.
+
+```         
 SELECT "release date"
 FROM films;
 ```
 
-**Order of execution**  
-Unlike many programming languages, SQL code is not processed in the order it is written. 
+**Order of execution**\
+Unlike many programming languages, SQL code is not processed in the order it is written.
 
-```
+```         
 Step 1: FROM
 Step 2: INNER JOIN, LEFT JOIN, RIGHT JOIN
 Step 3: WHERE (filter without aggregate function, only for individuals)
@@ -89,32 +86,34 @@ STEP 8: LIMIT
 
 Sometimes it can be helpful to rename columns in our result set, whether for clarity or brevity. We can do this using *aliasing*. Therefore we can use `AS`. So, if we want to rename the first column_name in our result set we type:
 
-```
+```         
 SELECT field_name1 AS new_name, field_name2, field_name
 FROM table_name;
 ```
+
 Attention! Does not change the name in the original table, only in the result table!
 
 ### Get only distinct values as a result
 
 If you only want unique values of a column, type:
 
-```
+```         
 SELECT DISTINCT field_name1
 FROM table_name;
 ```
+
 Also applies for several fields, maybe if you want to investigate which department appoint new employees in which year. In consequence, you only get unique combinations!
 
-```
+```         
 SELECT DISTINCT field_name1, field_name2
 FROM table_name;
 ```
 
 ### View
 
-*View* refers to a table that is the result of a saved SQL SELECT statement. Views are considered virtual tables, which means that the data a view contains is not generally stored in the database. Rather, it is the query code that is stored for future use. A benefit of this is that whenever the view is accessed, it automatically updates the query results to account for any updates to the underlying database. To create a view, we'll add a line of code before the SELECT`` statement: `CREATE VIEW`, then the name we'd like for the new view, then the `AS` keyword to assign the results of the query to the new view name.
+*View* refers to a table that is the result of a saved SQL SELECT statement. Views are considered virtual tables, which means that the data a view contains is not generally stored in the database. Rather, it is the query code that is stored for future use. A benefit of this is that whenever the view is accessed, it automatically updates the query results to account for any updates to the underlying database. To create a view, we'll add a line of code before the SELECT\``statement:`CREATE VIEW`, then the name we'd like for the new view, then the`AS\` keyword to assign the results of the query to the new view name.
 
-```
+```         
 CREATE VIEW view_name  AS
 SELECT  field_name1, field_name2
 FROM table_name;
@@ -122,19 +121,19 @@ FROM table_name;
 
 There is no result set when creating a view. Once a view is created, however, we can query it just as we would a normal table by selecting FROM the view.
 
-7. Using views
+7.  Using views
 
 View the results you've created with
 
-```
+```         
 SELECT * FROM view_name;
 ```
 
-### Count 
+### Count
 
-The `COUNT` function lets us do this by returning the number of records with a value in a field. 
+The `COUNT` function lets us do this by returning the number of records with a value in a field.
 
-```
+```         
 #How many records of birthdates are in the table people?
 SELECT COUNT (birtdates) AS count_birthdates
 FROM people;
@@ -148,7 +147,7 @@ FROM people;
 
 Often, our results will include duplicates. We can use the `DISTINCT` keyword to select all the unique values from a field.
 
-```
+```         
 #get unique values in a field, how many unique languages are in the films table?
 SELECT DISTINCT language
 FROM films;
@@ -159,11 +158,11 @@ FROM people;
 
 ### Filter with WHERE
 
-Use the keyword `WHERE` to filter records which met  certain conditions.  
+Use the keyword `WHERE` to filter records which met certain conditions.
 
 For numbers use the following operators:
 
-```
+```         
 #for all titles with a release year SMALLER THAN 1960
 SELECT title
 FROM films
@@ -187,7 +186,7 @@ WHERE release_year <> 1960;
 
 For strings use single-quotes:
 
-```
+```         
 #for all titles that have been created in Japan
 SELECT title
 FROM films
@@ -195,7 +194,8 @@ WHERE country = 'Japan';
 ```
 
 If we want to combine WHERE with other key words, this is the order:
-```
+
+```         
 #for all titles that have been created in Japan
 SELECT title
 FROM films
@@ -203,9 +203,9 @@ WHERE country = 'Japan'
 LIMIT 5;
 ```
 
-More than one condition:  
+More than one condition:
 
-```
+```         
 # one AND another conditions
 SELECT title
 FROM films
@@ -234,9 +234,9 @@ WHERE (release_year <> 1960 OR release_year <> 1961)
     AND (certification= 'PG' OR ceritifcation = 'R');
 ```
 
-What if we are not interested that a string matches a specific word, but a pattern? We can look for this with `LIKE, NOT LIKE`. Therefore we use wildcards. `%` match zero, one or many characters. `_` match a single character. 
+What if we are not interested that a string matches a specific word, but a pattern? We can look for this with `LIKE, NOT LIKE`. Therefore we use wildcards. `%` match zero, one or many characters. `_` match a single character.
 
-```
+```         
 #get all names, which started with Ad
 SELECT name
 FROM people
@@ -260,7 +260,7 @@ WHERE name NOT LIKE '__ma%';
 
 What if we want to filter based on many conditions or a range of numbers? Then, we can use the `IN` operator, which allows us to specify multiple values in a WHERE clause, making it easier and quicker to set numerous OR conditions.
 
-```
+```         
 #get all films from 1920, 1930 or 1940
 SELECT title
 FROM films
@@ -279,11 +279,11 @@ FROM films
 WHERE country IN ('Germany', 'France');
 ```
 
-### Missing values  
+### Missing values
 
 When we were learning how to use the COUNT keyword, we learned that we could include or exclude non-missing values depending on whether or not we use the asterisk in our query. But what is a missing or non-missing value? In SQL, `null` represents a missing or unknown value. `COUNT(*)` counts all records including missing values. Pay attention! `COUNT(field_name` counts only all given values and filter out the missings. Hence, we don't want to jump to false conclusions, its important to access, how much data is missing. Thus, we add `IS NULL` to the `WHERE` clause. Often we want to filter out missing values. Therefore we can use `IS NOT NULL`.
 
-```
+```         
 # how many birthdates are missing in the data base?
 SELECT COUNT(*) AS no_birthdates
 FROM people
@@ -301,17 +301,15 @@ WHERE birthdate IS NOT NULL;
 
 We already know one aggregate function, `COUNT()`! We'll now learn four new aggregate functions, allowing us to find the average, sum, minimum, and maximum of a specified field, not records!
 
-**for numeric**
-`SUM()` gives the sum 
-`AVG()` gives the average 
+**for numeric** `SUM()` gives the sum `AVG()` gives the average
 
-**For various data types**  
-`COUNT()` count the given values, can provide a total of any non-missing, or not null, records in a field regardless of their type.   
+**For various data types**\
+`COUNT()` count the given values, can provide a total of any non-missing, or not null, records in a field regardless of their type.\
 `MIN()` gives the minimum or `MAX()` gives the maximum, similarly, minimum and maximum will give the record that is figuratively the lowest or highest. Lowest can mean the letter A when dealing with strings or the earliest date when dealing with dates. And, of course, with numbers, it is the highest or the lowest number.
 
 **Best practice is to use an alias** Notice how all query results have automatically updated the field name to the function. In this case, min. It's best practice to use an alias when summarizing data so that our results are clear to anyone reading our code.
 
-```
+```         
 #for numeric data find the total duration of all films
 SELECT SUM(duration) AS total_duration
 FROM films
@@ -325,7 +323,7 @@ FROM films;
 
 We can combine aggregate functions with the WHERE clause to gain further insights from our data. That's because the WHERE clause executes before the SELECT statement. For example, to get the average budget of movies made in 2010 or later, we would select the average of the budget field from the films table where the release year is greater than or equal to 2010.
 
-```
+```         
 #get the minimum budget for all films released in 2010.
 SELECT MIN (budget) AS min_budget
 FROM films
@@ -345,20 +343,21 @@ WHERE release_year > 1990
 
 ### Round
 
-In SQL, we can use ROUND() to round our number to a specified decimal. There are two parameters for ROUND(): the number we want to round and the decimal place we want to round to. `ROUND(number_to_round, decimal_places)`. `decimal_places` are optional. If no value is given, it treats the key word like you assigned a zero and it is rounded to a whole number.  Using negative five as the decimal place parameter will cause the function to round to the hundred thousand or five places to the left. ROUND() can only be used with numerical fields.
+In SQL, we can use ROUND() to round our number to a specified decimal. There are two parameters for ROUND(): the number we want to round and the decimal place we want to round to. `ROUND(number_to_round, decimal_places)`. `decimal_places` are optional. If no value is given, it treats the key word like you assigned a zero and it is rounded to a whole number. Using negative five as the decimal place parameter will cause the function to round to the hundred thousand or five places to the left. ROUND() can only be used with numerical fields.
 
-```
+```         
 #let's round the average with 2 decimal places
 SELECT ROUND(AVG(budget),2) AS avg_budget
 FROM films
 WHERE release_year = 2010;
 ```
 
-### Arithmetic 
-We can perform basic arithmetic with symbols like plus, minus, multiply, and divide. Using parentheses with arithmetic indicates to the processor when the calculation needs to execute.  
-Similar to other programming languages, SQL assumes that we want to get an integer back if we divide an integer by an integer. So be careful! When dividing, we can add decimal places to our numbers if we want more precision.  
+### Arithmetic
 
-```
+We can perform basic arithmetic with symbols like plus, minus, multiply, and divide. Using parentheses with arithmetic indicates to the processor when the calculation needs to execute.\
+Similar to other programming languages, SQL assumes that we want to get an integer back if we divide an integer by an integer. So be careful! When dividing, we can add decimal places to our numbers if we want more precision.
+
+```         
 #only get a whole number
 SELECT(4/3);
 
@@ -368,16 +367,15 @@ SELECT(4.0/3.0);
 
 What's the difference between using aggregate functions and arithmetic? The key difference is that aggregate functions, like SUM, perform their operations on the fields vertically while arithmetic adds up the records horizontally. Notice that the query's result doesn't give us a defined field name. We will always need to use an alias when summarizing data with aggregate functions and arithmetic.
 
-```
+```         
 # what is the gap between what a movie has made and a movie had cost?
 SELECT (gross-budget) AS profit
 FROM films;
-
 ```
 
 Examples.
 
-```
+```         
 #Round duration_hours to two decimal places
 SELECT title, ROUND(duration / 60.0, 2) AS duration_hours
 FROM films;
@@ -385,11 +383,10 @@ FROM films;
 
 ### Sorting results
 
-Sorting results means we want to put our data in a specific order. It's another way to make our data easier to understand by quickly seeing it in a sequence. Therefore, use `ORDER BY`. It will sort in ascending order by default (small to high number, number or special signs to A to Z). If you want to change the order to descending, than use `DESC` after the field name. 
-When used on its own, itws written after the `FROM` statement. Attention! For numbers `null` / a missing value is the highest one. So you need to add a `WHERE` clause.  
+Sorting results means we want to put our data in a specific order. It's another way to make our data easier to understand by quickly seeing it in a sequence. Therefore, use `ORDER BY`. It will sort in ascending order by default (small to high number, number or special signs to A to Z). If you want to change the order to descending, than use `DESC` after the field name. When used on its own, itws written after the `FROM` statement. Attention! For numbers `null` / a missing value is the highest one. So you need to add a `WHERE` clause.\
 Notice that we don't have to select the field we are sorting on. For example, here's a query where we sort by release year and only look at the title. However, it is a good idea to include the field we are sorting on in the SELECT statement for clarity.
 
-```
+```         
 #get all titles and budgets, sorted descending by budget
 SELECT title, budget
 FROM films
@@ -401,8 +398,10 @@ FROM films
 WHERE budget IS NOT NULL
 ORDER BY budget DESC;
 ```
+
 ORDER BY can also be used to sort on **multiple fields**. It will sort by the first field specified, then sort by the next, etc. To specify multiple fields, we separate the field names with a comma. The second field we sort by can be thought of as a tie-breaker when the first field is not decisive in telling the order.
-```
+
+```         
 # what are the best movies? First sort by oscar wins. this is not sufficient, because several movies have won same often an oscar. Therefore, use the imdb score as a tie-breaker
 SELECT title, wins
 FROM best_movies
@@ -415,14 +414,13 @@ FROM people
 ORDER BY birthdate, name DESC;
 ```
 
-
 ### Grouping results
 
-Group with `GROUP BY`. It is commonly used with aggregate functions to provide summary statistics, particularly when only grouping a single field, certification, and selecting multiple fields, certification and title. This is because the aggregate function will reduce the non-grouped field to one record only, which will need to correspond to one group.  
-SQL will return an error if we try to `SELECT` a field that is not in our GROUP BY clause. We'll need to correct this by adding an aggregate function around title.  
+Group with `GROUP BY`. It is commonly used with aggregate functions to provide summary statistics, particularly when only grouping a single field, certification, and selecting multiple fields, certification and title. This is because the aggregate function will reduce the non-grouped field to one record only, which will need to correspond to one group.\
+SQL will return an error if we try to `SELECT` a field that is not in our GROUP BY clause. We'll need to correct this by adding an aggregate function around title.\
 We can use GROUP BY on multiple fields similar to ORDER BY. The order in which we write the fields affects how the data is grouped. The query here selects and groups certification and language while aggregating the title. The result shows that we have five films that have missing values for both certification and language, two films that are unrated and in Japanese, two films that are rated R and in Norwegian, and so on.
 
-```
+```         
 # Example with COUNT
 SELECT certification, language, COUNT(title) AS title_count
 FROM films
@@ -432,14 +430,13 @@ GROUP BY certification, language;
 SELECT release_year, AVG(duration) AS avg_duration
 FROM films
 GROUP BY release_year;
-
 ```
 
 ### Combine grouping and sorting
 
-We can combine GROUP BY with ORDER BY to group our results, make a calculation, and then order our results. 
+We can combine GROUP BY with ORDER BY to group our results, make a calculation, and then order our results.
 
-```
+```         
 #which release year has the highest language diversity?
 SELECT release_year, COUNT(DISTINCT language) AS year_diversity
 FROM films
@@ -449,9 +446,9 @@ ORDER BY year_diversity DESC;
 
 ### Filter with HAVING
 
-We've combined sorting and grouping; next, we will combine filtering with grouping. In SQL, we can't filter aggregate functions with WHERE clauses. The reason why groups have their own keyword for filtering comes down to the order of execution. WHERE filters individual records while HAVING filters grouped records. 
+We've combined sorting and grouping; next, we will combine filtering with grouping. In SQL, we can't filter aggregate functions with WHERE clauses. The reason why groups have their own keyword for filtering comes down to the order of execution. WHERE filters individual records while HAVING filters grouped records.
 
-```
+```         
 # in what years was the average duration time above 2 hours?
 SELECT release_year
 FROM films
@@ -466,12 +463,12 @@ HAVING COUNT(DISTINCT(certification)) > 10;
 
 ## Join Data
 
-Tables can have different relationsships to each other.  
-The first type of relationship we'll talk about is a one-to-many relationship. This is the most common type of relationship, one where a single entity can be associated with several entities. Think about a music library. One artist can produce many songs over their career. This is a one-to-many relationship. The same applies for authors and their books, directors and movie titles, and so on.  
-A second type of relationship is a one-to-one relationship. One-to-one relationships imply unique pairings between entities and are therefore less common. A commonly held premise of forensic science is that no two fingerprints are identical, and therefore that a particular fingerprint can only be generated by one person. This is an example of a one-to-one relationship: one fingerprint for one finger.  
-The last type of relationship we'll discuss is a many-to-many relationship. An example of this is languages and countries. Here we show the official languages of Germany, Belgium and the Netherlands, where we see that many languages can be spoken in many countries. For example, Belgium has three official languages: French, German, and Dutch. Conversely, languages can be official in many countries: Dutch is an official language of both the Netherlands and Belgium, but not Germany.  
+Tables can have different relationsships to each other.\
+The first type of relationship we'll talk about is a one-to-many relationship. This is the most common type of relationship, one where a single entity can be associated with several entities. Think about a music library. One artist can produce many songs over their career. This is a one-to-many relationship. The same applies for authors and their books, directors and movie titles, and so on.\
+A second type of relationship is a one-to-one relationship. One-to-one relationships imply unique pairings between entities and are therefore less common. A commonly held premise of forensic science is that no two fingerprints are identical, and therefore that a particular fingerprint can only be generated by one person. This is an example of a one-to-one relationship: one fingerprint for one finger.\
+The last type of relationship we'll discuss is a many-to-many relationship. An example of this is languages and countries. Here we show the official languages of Germany, Belgium and the Netherlands, where we see that many languages can be spoken in many countries. For example, Belgium has three official languages: French, German, and Dutch. Conversely, languages can be official in many countries: Dutch is an official language of both the Netherlands and Belgium, but not Germany.
 
-With SQL joins, you can join on a key field, or any other field.  
+With SQL joins, you can join on a key field, or any other field.
 
 ### Inner join
 
@@ -479,7 +476,7 @@ With SQL joins, you can join on a key field, or any other field.
 
 The `INNER JOIN` shown looks for records in both tables with the same values in the key field, id. Arrows indicate records where the id matches. The new created table from `INNER JOIN` only contains records with the same values in the key field from the former tables.
 
-```
+```         
 # define the fields from both tables that we want to have in our output table
 SELECT table_1.field_1, table1.field_2, table.2_field_3, table.2_field_4
     # table, to which data should be added
@@ -491,7 +488,7 @@ ON table_1.keyfield = table_2.keyfield;
 
 In our `INNER JOIN`, we've had to type out "table_1" and "table_2" several times. Luckily, we can alias table names using the same AS keyword used to **alias** column names. If the key field is named the same in both tables, we can use `USING`.
 
-```
+```         
 # define the fields from both tables that we want to have in our output table
 SELECT t1.field_1, t1.field_2, t2_field_3, t2_field_4
     # table, to which data should be added
@@ -511,9 +508,9 @@ INNER JOIN economies AS e
 ON c.code = e.code;
 ```
 
-A powerful feature of SQL is that multiple joins can be combined and run in a single query. Let's have a look at some syntax for multiple joins. We begin with the same INNER JOIN as before, and then chain another INNER JOIN to the result of our first INNER JOIN. Notice that we use left_table.id in the last line of this example. If we want to perform the second join using the id field of right_table rather than left_table, we can replace left_table.id with right_table.id in the final line. Only records will be in the output where the same value in the key field is given in all joined tables. 
+A powerful feature of SQL is that multiple joins can be combined and run in a single query. Let's have a look at some syntax for multiple joins. We begin with the same INNER JOIN as before, and then chain another INNER JOIN to the result of our first INNER JOIN. Notice that we use left_table.id in the last line of this example. If we want to perform the second join using the id field of right_table rather than left_table, we can replace left_table.id with right_table.id in the final line. Only records will be in the output where the same value in the key field is given in all joined tables.
 
-```
+```         
 # SYNTAX
 SELECT *
 FROM left_table
@@ -537,7 +534,7 @@ USING (prime_minister);
 
 What if we want to inner join fields by multiple keywords? We can limit the records returned by supplying an additional field to join on by adding the AND keyword to our ON clause. In the following example we join on date, a frequently used second column when joining on multiple fields. The result set now contains records that match on both id AND date.
 
-```
+```         
 # SYNTAX
 SELECT *
 FROM left_table
@@ -550,11 +547,11 @@ ON left_table_.key/ right_table.key = next_table.key
 
 ### Outer joins
 
-Outer joins can obtain records from other tables, even if matches are not found for the field being joined on.  
+Outer joins can obtain records from other tables, even if matches are not found for the field being joined on.
 
 A `LEFT JOIN` will return all records in the left_table, and those records in the right_table that match on the joining field provided. Records that are only in the right table provided will faded out. For records, that only appear in the left table, the missing values are set to null in the joined table. `LEFT JOIN` can also be written as `LEFT OUTER JOIN`.
 
-```
+```         
 # SYNTAX
 SELECT p1.country, prime_minister, president
 FROM prime_ministers AS p1
@@ -564,7 +561,7 @@ USING (country);
 
 `RIGHT JOIN`is the second type of outer join, and is much less common than `LEFT JOIN` so we won't spend as much time on it here. Instead of matching entries in the id column of the left table to the id column of the right table, a RIGHT JOIN does the reverse. All records are retained from right_table, even when id doesn't find a corresponding match in left_table. Null values are returned for the left_value field in records that do not find a match.
 
-```
+```         
 # SYNTAX
 SELECT *
 FROM left_table
@@ -576,7 +573,7 @@ ON left_table_key = right_table_key;
 
 A `FULL JOIN` combines a `LEFT JOIN` and a `RIGHT JOIN`. As you can see in this diagram, no values are faded out as they were in earlier diagrams. This is because the FULL JOIN will return all ids, irrespective of whether they have a match in the other table being joined. Note that this time, nulls can appear in either left_value or right_value fields. Note that the keyword `FULL OUTER JOIN` can also be used to return the same result.
 
-```
+```         
 # SYNTAX
 SELECT left_table_id AS l_id, right_table_id, AS r_idf, left_table_val AS l_val, right_table_val AS r?val
 FROM left_table
@@ -588,7 +585,7 @@ USING id;
 
 `CROSS JOINs` are slightly different than joins we have seen previously: they create all possible combinations of two tables. Let's explore the diagram for a CROSS JOIN. In this diagram we have two tables named table1 and table2, with one field each: id1 and id2, respectively. The result of the `CROSS JOIN`is all nine combinations of the id values of 1, 2, and 3 in table1 with the id values of A, B, and C for table2.
 
-```
+```         
 # SYNTAX
 SELECT field1, field2
 FROM table 1
@@ -597,10 +594,10 @@ CROSS JOIN table 2;
 
 ### Self join
 
-Self joins are used to compare values from part of a table to other values from within the same table. Self joins don't have dedicated syntax as other joins we have seen do. We can't just write SELF JOIN in SQL code, for example.  
+Self joins are used to compare values from part of a table to other values from within the same table. Self joins don't have dedicated syntax as other joins we have seen do. We can't just write SELF JOIN in SQL code, for example.\
 In addition, aliasing is required for a self join. Let's look at a chunk of INNER JOIN code using the prime_ministers table. The country column is selected twice, and so is the continent column. The prime_ministers table is on both the left and the right of the JOIN, making this both a self join and an `INNER JOIN`! The vital step here is setting the joining fields which we use to match the table to itself. For each country, we will find multiple matched countries in the right table, since we are joining on continent. Each of these matched countries will be returned as pairs. Since this query will return several records, we use LIMIT to return only the first 10 records.
 
-```
+```         
 # SYNTAX
 SELECT p1.country AS country1, p2.country AS country2, p1.continent
 FROM prime_ministers AS p1
@@ -608,9 +605,10 @@ INNER JOIN prime_minister AS p2
 ON p1.continent = p2.continent
 LIMIT 10;
 ```
+
 The results are a pairing of each country with every other country in the same continent. However, note that our join also paired countries with themselves, since they too are in the same continent as themselves. We don't want to include these, since a leader from Portugal does not need to meet with themselves, for example. Let's fix this. Recall the use of the AND clause to ensure multiple conditions are met in the ON clause. In our second condition, we use the not equal to operator to exclude records where the p1-dot-country and p2-dot-country fields are identical.
 
-```
+```         
 # SYNTAX
 SELECT p1.country AS country1, p2.country AS country2, p1.continent
 FROM prime_ministers AS p1
@@ -625,17 +623,19 @@ LIMIT 10;
 
 SQL has three main set operations, `UNION`, `INTERSECT` and `EXCEPT`. The Venn diagrams shown visualize the differences between them. We can think of each circle as representing a table. The green parts represent what is included after the set operation is performed on each pair of tables.
 
+```{=html}
 <img src="learn-sql-figures/venn_diagramms.png"
      alt="Venn Diagramms"
      width="400"/>
+```
 
-#### Union and Union all 
+#### Union and Union all
 
 -- is for adding records together --
 
-In SQL, the `UNION` operator takes two tables as input, and returns all records from both tables. The diagram shows two tables: left and right, and performing a UNION returns all records in each table. If two records are identical, UNION only returns them once. In SQL, there is a further operator for unions called `UNION ALL`. In contrast to UNION, given the same two tables, UNION ALL will include duplicate records. 
+In SQL, the `UNION` operator takes two tables as input, and returns all records from both tables. The diagram shows two tables: left and right, and performing a UNION returns all records in each table. If two records are identical, UNION only returns them once. In SQL, there is a further operator for unions called `UNION ALL`. In contrast to UNION, given the same two tables, UNION ALL will include duplicate records.
 
-```
+```         
 # SYNTAX
 SELECT t1.field1, t2.field2
 FROM table_1 AS t1
@@ -650,7 +650,7 @@ For all set operations, the number of selected columns and their respective data
 
 `INTERSECT` takes two tables as input, and returns only the records that exist in both tables.
 
-```
+```         
 # SYNTAX
 SELECT t1.field1, t2.field2
 FROM table_1 AS t1
@@ -661,15 +661,17 @@ FROM table_2 AS t2;
 
 Let's compare `INTERSECT` to performing an INNER JOIN on two fields with identical field names. Similar to UNION, for a record to be returned, INTERSECT requires all fields to match, since in set operations we do not specify any fields to match on. This is also why it requires the left and right table to have the same number of columns in order to compare records. In the figure shown, only records where both columns match are returned. In `NNER JOIN`, similar to INTERSECT, only results where both fields match are returned. INNER JOIN will return duplicate values, whereas INTERSECT will only return common records once. As we know from earlier lessons, INNER JOIN will add more columns to the result set.
 
+```{=html}
 <img src="learn-sql-figures/intersect.png"
      alt="INTERSECT"
      width="400"/>
+```
 
 ### Except
 
 `EXCEPT` allows us to identify the records that are present in one table, but not the other. More specifically, it retains only records from the left table that are not present in the right table.
 
-```
+```         
 # SYNTAX
 SELECT t1.field1, t2.field2
 FROM table_1 AS t1
@@ -678,20 +680,20 @@ SELECT t1.field1, t2.field2
 FROM table_2 AS t2;
 ```
 
-## Data manipulation 
+## Data manipulation
 
-`CASE` statements are SQL's version of an "IF this THEN that" statement. Case statements have three parts -- a `WHEN` clause, a `THEN` clause, and an`ELSE` clause. The first part -- the WHEN clause -- tests a given condition, say, x = 1. If this condition is TRUE, it returns the item you specify after your THEN clause. You can create multiple conditions by listing WHEN and THEN statements within the same CASE statement. The CASE statement is then ended with an ELSE clause that returns a specified value if all of your when statements are not true. When you have completed your statement, be sure to include the term `END`  and give it an alias. The completed CASE statement will evaluate to one column in your SQL query.  
+`CASE` statements are SQL's version of an "IF this THEN that" statement. Case statements have three parts -- a `WHEN` clause, a `THEN` clause, and an`ELSE` clause. The first part -- the WHEN clause -- tests a given condition, say, x = 1. If this condition is TRUE, it returns the item you specify after your THEN clause. You can create multiple conditions by listing WHEN and THEN statements within the same CASE statement. The CASE statement is then ended with an ELSE clause that returns a specified value if all of your when statements are not true. When you have completed your statement, be sure to include the term `END` and give it an alias. The completed CASE statement will evaluate to one column in your SQL query.
 
-```
+```         
 #Identify the home team as Bayern Munich, Schalke 04, or neither
     #select the hometeam_ids that belongs to the temas and give them the right name
 SELECT 
-	CASE WHEN hometeam_id = 10189 THEN 'FC Schalke 04'
+    CASE WHEN hometeam_id = 10189 THEN 'FC Schalke 04'
         WHEN hometeam_id = 9823 THEN 'FC Bayern Munich'
     #select how the others should be called which do not met the condition and define the alias for the field_name of the new table
          ELSE 'Other' END AS home_team,
     #count the number of matches and call them total_matches as a field name
-	COUNT(id) AS total_matches
+    COUNT(id) AS total_matches
     #define the table
 FROM matches_germany
     # Group by the CASE statement alias
@@ -699,8 +701,8 @@ GROUP BY home_team;
 
 # Select the date of  all matches in Spain and identify whether home wins, losses or ties
 SELECT 
-	date,
-	CASE WHEN home_goal > away_goal THEN 'Home win!'
+    date,
+    CASE WHEN home_goal > away_goal THEN 'Home win!'
         WHEN home_goal < away_goal THEN 'Home loss :(' 
         ELSE 'Tie' END AS outcome
 FROM matches_spain;
@@ -708,10 +710,10 @@ FROM matches_spain;
 
 ### Multiple logical conditions
 
-Previously, we covered CASE statements with one logical test in a WHEN statement, returning outcomes based on whether that test is TRUE or FALSE. The former example tests whether home or away goals were higher, and identifies them as wins for the team that had a higher score. Everything `ELSE` is categorized as a tie. The resulting table has one column identifying matches as one of 3 possible outcomes.  
+Previously, we covered CASE statements with one logical test in a WHEN statement, returning outcomes based on whether that test is TRUE or FALSE. The former example tests whether home or away goals were higher, and identifies them as wins for the team that had a higher score. Everything `ELSE` is categorized as a tie. The resulting table has one column identifying matches as one of 3 possible outcomes.\
 If you want to test multiple logical conditions in a CASE statement, you can use AND inside your WHEN clause. For example, let's see if each match was played, and won, by the team Chelsea. Let's see the CASE statement in this query. Each WHEN clause contains two logical tests -- the first tests if a hometead_id identifies Chelsea, AND then it tests if the home team scored higher than the away team. If both conditions are TRUE, the new column output returns the phrase "Chelsea home win!". The opposite set of conditions are included in a second when statement -- if the awayteam_id belongs to Chelsea, AND scored higher, then the output returns "Chelsea away win!". All other matches are categorized as a loss or tie. Here's the resulting table.
 
-```
+```         
 #Example
 #select the date and the ids for the team
 SELECT date, hometeam_id, awayteam_id
@@ -729,7 +731,7 @@ WHERE hometeam_id 8455 OR awayteam_id = 8455;
 
 When testing logical conditions, it's important to carefully consider which rows of your data are part of your ELSE clause, and if they're categorized correctly. Here's the same CASE statement from the previous slide, but the WHERE filter has been removed. Without this filter, your ELSE clause will categorize ALL matches played by anyone, who don't meet these first two conditions, as "Loss or tie :(".
 
-```
+```         
 #Example
 #select the date and the ids for the team
 SELECT date, hometeam_id, awayteam_id
@@ -741,14 +743,14 @@ SELECT date, hometeam_id, awayteam_id
 FROM match
 #return all matches and without the filter, all matches without Chelsea are defined as loss or tie
 ```
+
 The easiest way to correct for this is to ensure you add specific filters in the WHERE clause that exclude all teams where Chelsea did not play. Here, we specify this by using an OR statement in WHERE, which retrieves only results where the id 8455 is present in the hometeam_id or awayteam_id columns. The resulting table from earlier, with the team IDs in bold here, clearly specifies whether Chelsea was home or away team.
 
 ### NULL in logical conditions
 
-
 These two queries here are identical, except for the ELSE NULL statement specified in the second. They both return identical results -- a table with quite a few null results. But what if you want to exclude them?
 
-```
+```         
 #without ELSE
 SELECT date,
     CASE WHEN date> '2015-01-01' THEN 'more recently'
@@ -766,7 +768,7 @@ FROM match;
 
 Let's say we're only interested in viewing the results of games where Chelsea won, and we don't care if they lose or tie. Just like in the previous example, simply removing the ELSE clause will still retrieve those results -- and a lot of NULL values. To correct for this, you can treat the entire CASE statement as a column to filter by in your WHERE clause, just like any other column. In order to filter a query by a CASE statement,
 
-```
+```         
 #Example
 #select the date and the ids for the team
 SELECT date, hometeam_id, awayteam_id
@@ -781,13 +783,14 @@ WHERE     CASE WHEN hometeam_id = 8455 AND home_goal> away_goal THEN 'Chelsea ho
             WHEN awayteam_id = 8455 AND home_goal < away_goal THEN 'Chelsea away win!'
     END IS NOT NULL;
 ```
+
 ### CASE WHEN and aggregated functions
 
 CASE statements can be used to create columns for categorizing data, and to filter your data in the WHERE clause. You can also use CASE statements to aggregate data based on the result of a logical test.
 
-CASE statements are like any other column in your query, so you can include them inside an aggregate function. Take a look at the CASE statement. The WHEN clause includes a similar logical test to the previous lesson -- did Liverpool play as the home team, AND did the home team score higher than the away team? The difference begins in your THEN clause. Instead of returning a string of text, you return the column identifying the unique match id. 
+CASE statements are like any other column in your query, so you can include them inside an aggregate function. Take a look at the CASE statement. The WHEN clause includes a similar logical test to the previous lesson -- did Liverpool play as the home team, AND did the home team score higher than the away team? The difference begins in your THEN clause. Instead of returning a string of text, you return the column identifying the unique match id.
 
-```
+```         
 # What is the number of home games Liverpool (8650) won in each seasion?
 SELECT season,
     #count only the rows where liverpool has won as a home team
@@ -798,9 +801,9 @@ FROM match
 GROUP BY season;
 ```
 
-Similarly, you can use the SUM function to calculate a total of any value. 
+Similarly, you can use the SUM function to calculate a total of any value.
 
-```
+```         
 # what is the number of home and away goals Liverpool scored in each season?
 SELECT season,
     SUM (CASE WHENhometeam_id= 8650
@@ -812,9 +815,9 @@ FROM match
 GROUP BY season;
 ```
 
-You can also use the AVG function with CASE in two key ways. First, you can calculate an average of data. You can do this using CASE in the EXACT same way you used the SUM function. 
+You can also use the AVG function with CASE in two key ways. First, you can calculate an average of data. You can do this using CASE in the EXACT same way you used the SUM function.
 
-```
+```         
 # what was the average goals in each season?
 SELECT season,
     SUM (CASE WHENhometeam_id= 8650
@@ -839,7 +842,7 @@ GROUB BY season;
 
 The second key application of CASE with AVG is in the calculation of percentages. This requires a specific structure in order for your calculation to be accurate.
 
-```
+```         
 # What is the percentage of Liverpools games did they win in each season?
 #select season to be displayed
 SELECT season,
@@ -866,33 +869,29 @@ GROUP BY season;
 
 A subquery is a query nested inside another query. You can tell that there is a subquery in your SQL statement if you have an additional SELECT statement contained inside parentheses, surrounded by another complete SQL statement. So why is this important? Often, in order to retrieve information you want, you have to perform some intermediary transformations to your data before selecting, filtering, or calculating information. Subqueries are a common way of performing this transformation.
 
-```
+```         
 #SYNTAX
 SELECT column
 FROM (SELECT column
     FROM table) AS subquery;
 ```
 
-A subquery can be placed in any part of your query -- such as the `SELECT, FROM, WHERE`, or `GROUP BY` clause. Where you place it depends on what you want your final data to look like.  
-- Subqueries allow you to compare summarized values to detailed data. For example, compare Liverpool's performance to the entire English Premier League
-- Subqueries also allow you to better structure or reshape your data for multiple purposes, such as determining the highest monthly average of goals scored in the Bundesliga.
-- Finally, subqueries allow you to combine data from tables where you are unable to perform a join, such as getting both the home and away team names into your results table.
+A subquery can be placed in any part of your query -- such as the `SELECT, FROM, WHERE`, or `GROUP BY` clause. Where you place it depends on what you want your final data to look like.\
+- Subqueries allow you to compare summarized values to detailed data. For example, compare Liverpool's performance to the entire English Premier League - Subqueries also allow you to better structure or reshape your data for multiple purposes, such as determining the highest monthly average of goals scored in the Bundesliga. - Finally, subqueries allow you to combine data from tables where you are unable to perform a join, such as getting both the home and away team names into your results table.
 
-A **simple subquery** is a query, nested inside another query, that can be run on its own.  
-A simple subquery is also evaluated once in the entire query. This means that SQL first processes the information inside the subquery, gets the information it needs, and then moves on to processing information in the OUTER query.  
+A **simple subquery** is a query, nested inside another query, that can be run on its own.\
+A simple subquery is also evaluated once in the entire query. This means that SQL first processes the information inside the subquery, gets the information it needs, and then moves on to processing information in the OUTER query.
 
 ### Subqueries in the WHERE clause
 
-- useful for filtering results based on information you'd have to calculate separately beforehand.
-- only return a single column
-- Subqueries inside WHERE can be from the same table or from a different table
-- could be another way to join information of tables without using join. Now, it is possible to filter the data of one table based on values which are given in another table
+-   useful for filtering results based on information you'd have to calculate separately beforehand.
+-   only return a single column
+-   Subqueries inside WHERE can be from the same table or from a different table
+-   could be another way to join information of tables without using join. Now, it is possible to filter the data of one table based on values which are given in another table
 
-Workflow: 
-- include a SQL subquery as an argument for the IN operator, provided the result of the subquery is of the same data type as the field we are filtering on.
-- only work if some_field is of the same data type as some_numeric_field, because the result of the subquery will be a numeric field. 
+Workflow: - include a SQL subquery as an argument for the IN operator, provided the result of the subquery is of the same data type as the field we are filtering on. - only work if some_field is of the same data type as some_numeric_field, because the result of the subquery will be a numeric field.
 
-```
+```         
 SELECT *
 FROM some_table
 WHERE some_field IN
@@ -901,7 +900,7 @@ WHERE some_field IN
 
 Example: What home_goals where above the average in 2012/2013?
 
-```
+```         
 SELECT date, home_id, away_id, home_goal, away_goal
 FROM match
 WHERE season = '2012/2013'
@@ -911,9 +910,9 @@ WHERE season = '2012/2013'
          FROM match);
 ```
 
-Subqueries are also useful for generating a filtering list.   Example: "Which teams are part of Poland's league?" 
+Subqueries are also useful for generating a filtering list. Example: "Which teams are part of Poland's league?"
 
-```
+```         
 SELECT team_long_name, team_short_name AS abbr
 FROM team
 WHERE team_api_id IN
@@ -922,11 +921,12 @@ WHERE team_api_id IN
     FROM match
     WHERE country_id = 157222);
 ```
+
 The subquery in WHERE is processed first, generating the overall average of home goals scored. SQL then moves onto the main query, treating the subquery like the single, aggregate value it just generated.
 
-Another example, how you can use subqueries to filter one table based on information from another. Determining the presidents of countries that gained independence before 1800. 
+Another example, how you can use subqueries to filter one table based on information from another. Determining the presidents of countries that gained independence before 1800.
 
-```
+```         
 # Example
 SELECT president, country, continent
 FROM presidents
@@ -938,7 +938,7 @@ WHERE indep_year <1800;
 
 Also possible the other way around! The anti join chooses records in the first table where col1 does NOT find a match in col2. Example: How might we adapt our semi join to determine countries in the Americas founded after 1800?
 
-```
+```         
 # Example
 SELECT president, country, continent
 FROM presidents
@@ -951,13 +951,14 @@ WHERE indep_year <1800;
 
 ### Subqueries in the FROM clause
 
-- useful  for more complex set of results
-- robust tool for restructuring and transforming your data in a different shape (long to wide format)
-- prefilitering before performing calculations
-- calculating aggregates
+-   useful for more complex set of results
+-   robust tool for restructuring and transforming your data in a different shape (long to wide format)
+-   prefilitering before performing calculations
+-   calculating aggregates
 
-**Example for filtering:** all the continents with monarchs, along with the most recent country to gain independence in that continent. 
-```
+**Example for filtering:** all the continents with monarchs, along with the most recent country to gain independence in that continent.
+
+```         
 #Start with pulling the most recent independence years
 SELECT continent, MAX(indep_year) AS most_recent
 FROM states
@@ -973,9 +974,9 @@ GROUP BY continent AS sub
 WHERE monarchs.continent = sub.continent
 ```
 
-**Example for averaging**: get the top 3 teams based home goal average for each team in data base for season 2011/2012. 
+**Example for averaging**: get the top 3 teams based home goal average for each team in data base for season 2011/2012.
 
-```
+```         
 #first create a query, that become the subquery
 SELECT
     t.team_long_name AS team,
@@ -1010,18 +1011,17 @@ ORDER BY home_avg DESC
 LIMIT 3;
 ```
 
-To remember: 
-- you can create multiple subqueries in one FROM statement, give all of them an ALIAS, make sure you are able to join them to each other
-- you can join a subquery to an existing data base, needs a joining column in both tables!
+To remember: - you can create multiple subqueries in one FROM statement, give all of them an ALIAS, make sure you are able to join them to each other - you can join a subquery to an existing data base, needs a joining column in both tables!
 
 ### Subqueries in the FROM clause
 
-- return single, aggregated  value
-- fairly useful, cause uou cannot include an aggragte value in an ungrouped query
-- useful for performing complex mathematical calculations, e.g. to calculate how an individual score deviates from an average
+-   return single, aggregated value
+-   fairly useful, cause uou cannot include an aggragte value in an ungrouped query
+-   useful for performing complex mathematical calculations, e.g. to calculate how an individual score deviates from an average
 
 **Example for including aggregates**: compare total number of matches played each season with the total number of matches overall.
-```
+
+```         
 #SYNTAX
 # overall number
 SELECT COUNT(id)
@@ -1035,9 +1035,10 @@ COUNT(id) AS matches,
 FROM match
 GROUP BY season;
 ```
+
 **Example for calculations**: difference between the overall average numbers of goals scored in a match across all seasons and any given match
 
-```
+```         
 #main query
 SELECT date,
     #subquery 1: all goals in a game
@@ -1047,15 +1048,593 @@ SELECT date,
 FROM match
 WHERE season = '2011/2012';
 ```
-To remember:
-- subquery needs to return a single value, because information computed in the SELECT query is applied identically to each row in a data set
-- correct placement of data filters in both the main query and the subquery
+
+To remember: - subquery needs to return a single value, because information computed in the SELECT query is applied identically to each row in a data set - correct placement of data filters in both the main query and the subquery
 
 ### Subqueries combined
 
-Best practices for readability:
-- formatting your queries
-- annotate your with `/*` what it does, use inline comments `--`
-- indent your queries for better debugging. Make sure that you clearly indent all information that's part of a single column, such as a long CASE statement, or a complicated subquery in SELECT.
-- make sure that your filters are properly placed in every subquery, and the main query, in order to generate accurate results. 
+Best practices for readability: - formatting your queries - annotate your with `/*` what it does, use inline comments `--` - indent your queries for better debugging. Make sure that you clearly indent all information that's part of a single column, such as a long CASE statement, or a complicated subquery in SELECT. - make sure that your filters are properly placed in every subquery, and the main query, in order to generate accurate results.
+
+### Correlated Subqueries
+
+Correlated subqueries are a special kind of subquery that use values from the outer query in order to generate the final results. The subquery is re-executed each time a new row in the final data set is returned, in order to properly generate each new piece of information.
+
+**Key differences between simple and correlated subqueries**\
+- simple subqueries can be run independently from the main query, correlated subs are dependent - simple subs only once, correlated ones evalutated in loops - correlated can be used for instance in lieu of of a left join
+
+Correlated subqueries are useful for matching data across multiple columns.
+
+### Nested subqueries
+
+Nested subqueries are exactly as they sound -- subqueries nested inside other subqueries.
+
+Example: How does each month's total goals differ from the monthly average of goals scored?
+
+**Inner subquery** that displays total results from month 1 to 12
+
+```         
+SELECT
+  EXTRACT (MONTH from date) as month,
+  SUM(home_goal + away_goal) AS goals
+  FROM match
+  GROUP BY month;
+```
+
+Place this to the **outer subquery** to calculate an average of the values generated in the previous table to get the average monthly goals -\> place this in the main query for calculating the final data set.
+
+```         
+SELECT AVG(goals) #outer subquery
+FROM (SELECT
+  EXTRACT (MONTH from date) AS month,
+  SUM(home_goal + away_goal) AS goals
+  FROM match
+  GROUP BY month)
+```
+
+Place the entire nested subquery in the SELECT statement to compare the SUM of goals scored in each month. Here are the first 4 rows of the final query, which generates a sum of goals scored in the month, and a column subtracting the goals scored, from the overall monthly average.
+
+```         
+SELECT
+  EXTRACT(MONTH FROM date) AS month,
+  SUM(m.home_goal + m.away_goal) AS total_goals,
+  SUM(m.home_goal + m.away_goal) =
+  SELECT AVG(goals) #nested subquery begins
+  FROM (SELECT
+  EXTRACT (MONTH from date) AS month,
+  SUM(home_goal + away_goal) AS goals
+  FROM match
+  GROUP BY month) AS s) AS diff # nested subquery ends
+FROM match AS m
+GROUP BY month;
+```
+
+It's important to also note that nested queries can be correlated or uncorrelated. Can also be an combination (only inner or outer subquery is correlated).
+
+## Common Table Expressions (CTEs)
+
+-   For improving readability and accessibility
+-   special type of subquery, that is declared ahead of your main query: Instead of wrapping subqueries inside, say the FROM statement, you name it using the WITH statement, and then reference it by name later in the FROM statement as if it were any other table in your database.
+
+Example:
+
+```         
+# like we've done before:
+SELECT c.name AS country
+COUNT(s.id) AS matches
+FROM country AS c
+  # subquery in the FROM statement
+INNER JOIN (
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal + away_goal) >= 10) AS s
+ON c.id = s.country_id
+GROUP BY country;
+)
+```
+
+```         
+#rewrite with CTE 
+  #subquery in the beginning as a CTE
+WITH s AS(
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal + away_goal) >= 10
+)
+  THEN the rest of the code
+SELECT c.name AS country
+COUNT(s.id) AS matches
+FROM country AS c
+INNER JOIN s 
+ON c.id = s.country_id
+GROUP BY country;
+```
+
+If you have multiple subqueries that you want to turn into a common table expression, you can simply list them one after another, with a comma in between each CTE, and NO comma after the last one.
+
+Example:
+
+```         
+#rewrite with CTE 
+  #subquery 1 in the beginning as a CTE
+WITH s1 AS(
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal + away_goal) >= 10), #don't forget the comma
+  #subquery 2, no repition of WITH needed, be attentive of correct denomination of queries
+  s2 AS( 
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal+away_goal <=1)
+  
+)
+  THEN the rest of the code
+SELECT c.name AS country
+COUNT(s.id) AS matches
+FROM country AS c
+INNER JOIN s 
+ON c.id = s.country_id
+GROUP BY country;
+```
+
+Why CTEs?
+
+-   only executed once & stored in memory
+-   perfect for organizing long queries - later CTEs can retrieve data produced by former ones - can reference itself with SELF JOIN
+
+## Deciding on techniques
+
+**Comparision of the techniques**
+
+*Joins*
+
+-   combine 2
+-   tables - limitied on simple combinations & aggregations of tables that are already in your data base
+
+*Correlated subqueries*
+
+-   match subqueries & tables → simplify syntax, avoid limits of join (not possible to join two separate columns in one table to a single column in another)
+-   high processing time
+
+*Multiple & nested subqueries*
+
+-   improve accuracy & reproducibility
+
+*CTE*
+
+-   organization
+-   referencing as alternative for nested subs
+
+**Which to use? Depends on database/ question**
+
+-   joins for data bases with more than 1 table (what is the total sales per employee?)
+
+```         
+# get team names with subquery & joins
+SELECT
+    m.date,
+    -- Get the home and away team names
+    hometeam,
+    awayteam,
+    m.home_goal,
+    m.away_goal
+FROM match AS m
+
+-- Join the home subquery to the match table
+LEFT JOIN (
+  SELECT match.id, team.team_long_name AS hometeam
+  FROM match
+  LEFT JOIN team
+  ON match.hometeam_id = team.team_api_id) AS home
+ON home.id = m.id
+
+-- Join the away subquery to the match table
+LEFT JOIN (
+  SELECT match.id, team.team_long_name AS awayteam
+  FROM match
+  LEFT JOIN team
+  -- Get the away team ID in the subquery
+  ON match.awayteam_id = team.team_api_id) AS away
+ON away.id = m.id;
+```
+
+Result is date, hometeam name, awayteam name, home_goal, away_goal.
+
+-   correlated subs for matching data from different columns in one or more tables (Who does each employee report to in a company?)
+
+```         
+# get the same result as before using correlated subs this time
+SELECT
+    m.date,
+    (SELECT team_long_name
+     FROM team AS t
+     WHERE t.team_api_id = m.hometeam_id) AS hometeam,
+    -- Connect the team to the match table
+    (SELECT team_long_name
+     FROM team AS t
+     WHERE t.team_api_id = m.awayteam_id) AS awayteam,
+    -- Select home and away goals
+     home_goal,
+     away_goal
+FROM match AS m;
+```
+
+-   multiple / nested subs for multiple steps of transformation and preparation before generating the final query (What is the average deal size closed by each salesrepresentative in the quarter?)
+-   CTEs for comparing large number of disparate pieces of information. (How did the marketing, sales, growth & engineering teams perform on key metrics?)
+
+```         
+# same result with CTE
+WITH home AS (
+  SELECT m.id, m.date, 
+         t.team_long_name AS hometeam, m.home_goal
+  FROM match AS m
+  LEFT JOIN team AS t 
+  ON m.hometeam_id = t.team_api_id),
+-- Declare and set up the away CTE
+away AS (
+  SELECT m.id, m.date, 
+         t.team_long_name AS awayteam, m.away_goal
+  FROM match AS m
+  LEFT JOIN team AS t 
+  ON m.awayteam_id = t.team_api_id)
+-- Select date, home_goal, and away_goal
+SELECT 
+    home.date,
+    home.hometeam,
+    away.awayteam,
+    home.home_goal,
+    away.away_goal
+-- Join away and home on the id column
+FROM home
+INNER JOIN away
+ON home.id = away.id;
+```
+
+## Window Function for working with aggregate values
+
+If you try to retrieve additional information without grouping by every single non-aggregate value, your query will return an error. Thus, you can't compare aggregate values to non-aggregate data. You can work around this limitation using a window function. Window functions are a class of functions that perform calculations on a result set that has already been generated, also referred to as a "window". You can use window functions to perform aggregate calculations without having to group your data, just as you did with a subquery in SELECT. You can also use them to calculate information such as running totals, rankings, and moving averages.
+
+Example: How many goals were scored in each match in 11/12 & how did that compare to the average?
+
+```
+SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# subquery to pass the overall_avg to the summed goals in this season
+  (SELECT AVG(home_goal + away_goal)
+     FROM match
+    WHERE season = '2011/2012') AS overall_avg
+FROM match
+WHERE season = '2011/2012';
+```
+
+The same results can be generated using the clause common to all window functions -- the OVER clause. Instead of writing a subquery, calculate the AVG of home_goal and away_goal, and follow it with the OVER clause. This clause tells SQL to "pass this aggregate value over this existing result set." 
+
+```
+SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# subquery to pass the overall_avg to the summed goals in this season
+  AVG(home_goal + away_goal) OVER() AS overall_avg
+FROM match
+WHERE season = '2011/2012;
+```
+The results are identical to the previous statement that used a subquery in SELECT, with a simpler syntax and faster processing time.
+
+
+Another simple type of column you can generate with a window function is a RANK. A RANK simply creates a column numbering your data set from highest to lowest, or lowest to highest, based on a column that you specify. To create the rank, you start with the RANK function, using parentheses, followed by the OVER clause. Inside the OVER clause, include the ORDER BY clause, and the column or columns you want to use to generate the rank. 
+
+```
+# assigning a rank
+SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# add a rank
+  RANK () OVER( ORDERED BY homehoal+ away_goal) AS goals_rank 
+FROM match
+WHERE season = '2011/2012;
+```
+
+By default, the RANK function orders the results and ranking from smallest to largest values. In the case of our data set here, this isn't particularly informative. Change the order using the DESC function. You'll notice that the RANK function automatically ties identical values, such as the first 2 results, and then skips the next value in the rank.
+
+```
+# assigning a rank
+SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# add a rank
+  RANK () OVER( ORDER BY homehoal+ away_goal DESC) AS goals_rank 
+FROM match
+WHERE season = '2011/2012;
+```
+There are a few key considerations when using window functions. First, window functions are processed after the entire query except the final ORDER BY statement. Thus, the window function uses the result set to calculate information, as opposed to using the database directly. Second, it's important to know that window functions are available in PostgreSQL, Oracle, MySQL, but not in SQLite.
+
+Exercise:
+Select the league name and average total goals scored from league and match.
+Complete the window function so it calculates the rank of average goals scored across all leagues in the database.
+Order the rank by the average total of home and away goals scored.
+
+```
+SELECT 
+	-- Select the league name and average goals scored
+	l.name AS league,
+    AVG(m.home_goal + m.away_goal) AS avg_goals,
+    -- Rank each league according to the average goals
+    RANK() OVER(ORDER BY AVG(m.home_goal + m.away_goal)) AS league_rank
+FROM league AS l
+LEFT JOIN match AS m 
+ON l.id = m.country_id
+WHERE m.season = '2011/2012'
+GROUP BY l.name
+-- Order the query by the rank you created
+ORDER BY league_rank;
+```
+
+### OVER and PARTITION BY &rarr; calculate seperate values for different categories
+
+
+One important statement you can add to your OVER clause is PARTITION BY. A partition allows you to calculate separate values for different categories established in a partition. This is one way to calculate different aggregate values within one column of data, and pass them down a data set, instead of having to calculate them in different columns. The syntax for a partition is fairly simple. Just like before, use an aggregate function to compute a calculation, such as the AVG of the home_goal column. You then add the OVER clause afterward, and inside the parentheses, state PARTITION BY, followed by the column you want to partition the average by. This will then return the overall average for, or PARTITIONed BY each season.
+
+
+```
+# use an aggregate function to compute a calculation:
+AVG (home_goal) OVER(PARTITION BY season)
+  #return the overall average by each season
+  
+# in a query: How many goals were scored in each match, and how did that compare to the season's average?
+
+SELECT
+  date,
+  (home_goal+away_goal) AS goals,
+  AVG(home_goal+ away_goal) OVER (PARTITION BY season) AS season_avg
+FROM match;
+```
+
+You can also use PARTITION to calculate values broken out by multiple columns. In the query you see here, the OVER clause contains two columns to partition the AVG goals scored--season, and country. The result set returns the average goals scored broken out by season and country.
+
+```
+SELECT
+  c.name,
+  m.season,
+  (home_goal+away_goal) AS goals,
+  AVG(home_goal+ away_goal) OVER (PARTITION BY m.season, c.name) AS season_cntry_avg
+FROM country as c
+LEFT JOIN match as m
+ON c.id = m.country_id
+```
+
+Exercise:
+
+Construct two window functions partitioning the average of home and away goals by season and month.
+Filter the dataset by Legia Warszawa's team ID (8673) so that the window calculation only includes matches involving them.
+
+``` 
+SELECT 
+	date,
+	season,
+	home_goal,
+	away_goal,
+	CASE WHEN hometeam_id = 8673 THEN 'home' 
+         ELSE 'away' END AS warsaw_location,
+	-- Calculate average goals partitioned by season and month
+    AVG(home_goal) OVER(PARTITION BY season, 
+         	EXTRACT(MONTH FROM date)) AS season_mo_home,
+    AVG(away_goal) OVER(PARTITION BY season, 
+            EXTRACT(MONTH FROM date)) AS season_mo_away
+FROM match
+WHERE 
+	hometeam_id = 8673
+    OR awayteam_id = 8673
+ORDER BY (home_goal + away_goal) DESC;
+```
+
+### Sliding windows
+
+Sliding windows are functions that perform calculations relative to the current row of a data set. You can use sliding windows to calculate a wide variety of information that aggregates one row at a time down your data set -- running totals, sums, counts, and averages in any order you need. A sliding window calculation can also be partitioned by one or more columns, just like a non-sliding window.
+
+A sliding window function contains specific functions within the OVER clause to specify the data you want to use in your calculations. The general syntax looks like this:  
+```
+ROWS BETWEEN <start> AND <finish> -> indicate that you plan on slicing information in your window function for each row in the data set, and then you specify the starting and finishing point of the calculation
+PRECEDING and FOLLOWING ->  specify the number of rows before, or after, the current row that you want to include in a calculation
+UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING include every row since the beginning, or the end, of the data set in your calculations
+CURRENT ROW stop your calculation at the current row
+```
+
+For example, the sliding window in this query includes several key pieces of information in its calculation. 
+
+```
+SELECT
+  date,
+  home_goal,
+  away_goal,
+  # get the sum of goals scored when Machester Cit playes as a home team 11/12 season
+  SUM(home_goal)
+  # turn this calculation into a running total, ordered by the date of the match from the oldest to most recent & from the beinning of the data set to the current row
+    OVER (ORDER BY date ROWS BETWEEN
+      UNDBOUNDED PRECEDING AND CURRENT ROW) as running_total
+FROM match
+WHERE hometeam_id =8456 AND season - '2011/2012';
+```
+Your resulting data set looks like this, with a column calculating the total number of goals scored across the season, with a final total listed in the last row.  
+
+Using the PRECEDING statement, you also have the ability to calculate sliding windows with a more limited frame. For example, the query you see here is similar to the previous one, with a slightly modified sliding window. The phrase UNBOUNDED PRECEDING is replaced here with the phrase 1 PRECEDING, which calculates the sum of Manchester City's goals in the current and previous match.
+
+```
+SELECT
+  date,
+  home_goal,
+  away_goal,
+  # get the sum of goals scored when Machester Cit playes as a home team 11/12 season
+  SUM(home_goal)
+  # turn this calculation into a running total, ordered by the date of the match from the oldest to most recent & from the beinning of the data set to the current row
+    OVER (ORDER BY date ROWS BETWEEN
+      1 PRECEDING AND CURRENT ROW) as last2
+FROM match
+WHERE hometeam_id =8456 AND season - '2011/2012';
+```
+
+Exercise: In this exercise, you will expand on the examples discussed in the video, calculating the running total of goals scored by the FC Utrecht when they were the home team during the 2011/2012 season. Do they score more goals at the end of the season as the home or away team?
+
+```
+SELECT 
+	date,
+	home_goal,
+	away_goal,
+    -- Create a running total and running average of home goals
+    SUM(home_goal) OVER(ORDER BY date 
+         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total,
+    AVG(home_goal) OVER(ORDER BY date 
+         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_avg
+FROM match
+WHERE 
+	hometeam_id = 9908 
+	AND season = '2011/2012';
+```
+
+In this exercise, you will slightly modify the query from the previous exercise by sorting the data set in reverse order and calculating a backward running total from the CURRENT ROW to the end of the data set (earliest record).
+
+```
+SELECT 
+	-- Select the date and away goals
+	date,
+    away_goal,
+    -- Create a running total and running average of away goals
+    SUM(away_goal) OVER(ORDER BY date DESC
+         ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS running_total,
+    AVG(away_goal) OVER(ORDER BY date DESC
+         ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS running_avg
+FROM match
+WHERE 
+	awayteam_id = 9908 
+    AND season = '2011/2012';
+```
+
+### Final Case Study
+
+Final question: Who defeated Machester United in the 13/14 season?
+
+In the following exercises, you will generate a data set that tackles one of the issues we've explored during this course -- namely, that it's difficult to retrieve the names of teams who played in a given match. Since this isn't feasible with joins, we will accomplish it with common table expressions. We'll also be using CASE statements to categorize the outcomes of matches based on whether or not Manchester United won a particular match. Finally, we'll be ranking matches by the number of goals they lost the match using a window function.
+
+Your first task is to create the first query that filters for matches where Manchester United played as the home team. This will become a common table expression in a later exercise.
+
+```
+SELECT 
+	m.id, 
+    t.team_long_name,
+    -- Identify matches as home/away wins or ties
+	CASE WHEN m.home_goal > m.away_goal THEN 'MU Win'
+		WHEN m.home_goal < m.away_goal THEN'MU Loss'
+        ELSE 'Tie' END AS outcome
+FROM match AS m
+-- Left join team on the home team ID and team API id
+LEFT JOIN team AS t 
+ON m.hometeam_id = t.team_api_id
+WHERE 
+	-- Filter for 2014/2015 and Manchester United as the home team
+	season = '2014/2015'
+	AND t.team_long_name = 'Manchester United';
+```
+
+Great job! Now that you have a query identifying the home team in a match, you will perform a similar set of steps to identify the away team. Just like the previous step, you will join the match and team tables. Each of these two queries will be declared as a Common Table Expression in the following step.
+
+The primary difference in this query is that you will be joining the tables on awayteam_id, and reversing the match outcomes in the CASE statement.
+
+When altering CASE statement logic in your own work, you can reverse either the logical condition (i.e., home_goal > away_goal) or the outcome in THEN -- just make sure you only reverse one of the two!
+
+```
+SELECT 
+	m.id, 
+    t.team_long_name,
+    -- Identify matches as home/away wins or ties
+	CASE WHEN m.home_goal > m.away_goal THEN 'MU Loss'
+		WHEN m.home_goal < m.away_goal THEN 'MU Win'
+        ELSE 'Tie' END AS outcome
+-- Join team table to the match table
+FROM match AS m
+LEFT JOIN team AS t 
+ON m.awayteam_id = t.team_api_id
+WHERE 
+	-- Filter for 2014/2015 and Manchester United as the away team
+	season = '2014/2015'
+	AND t.team_long_name = 'Manchester United';
+```
+
+Putting the CTEs together:  
+Now that you've created the two subqueries identifying the home and away team opponents, it's time to rearrange your query with the home and away subqueries as Common Table Expressions (CTEs). You'll notice that the main query includes the phrase, SELECT DISTINCT. Without identifying only DISTINCT matches, you might return a duplicate record for each game played.
+
+Continue building the query to extract all matches played by Manchester United in the 2014/2015 season.
+
+```
+-- Set up the home team CTE
+WITH home AS (
+  SELECT m.id, t.team_long_name,
+	  CASE WHEN m.home_goal > m.away_goal THEN 'MU Win'
+		   WHEN m.home_goal < m.away_goal THEN 'MU Loss' 
+  		   ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.hometeam_id = t.team_api_id),
+-- Set up the away team CTE
+away AS (
+  SELECT m.id, t.team_long_name,
+	  CASE WHEN m.home_goal > m.away_goal THEN 'MU Loss'
+		   WHEN m.home_goal < m.away_goal THEN 'MU Win' 
+  		   ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.awayteam_id = t.team_api_id)
+-- Select team names, the date and goals
+SELECT DISTINCT
+    m.date,
+    home.team_long_name AS home_team,
+    away.team_long_name AS away_team,
+    m.home_goal,
+    m.away_goal
+-- Join the CTEs onto the match table
+FROM match AS m
+LEFT JOIN home ON m.id = home.id
+LEFT JOIN away ON m.id = away.id
+WHERE m.season = '2014/2015'
+      AND (home.team_long_name = 'Manchester United' 
+           OR away.team_long_name = 'Manchester United');
+```
+
+*Add a window function:* Fantastic! You now have a result set that retrieves the match date, home team, away team, and the goals scored by each team. You have one final component of the question left -- how badly did Manchester United lose in each match?
+
+In order to determine this, let's add a window function to the main query that ranks matches by the absolute value of the difference between home_goal and away_goal. This allows us to directly compare the difference in scores without having to consider whether Manchester United played as the home or away team!
+
+The equation is complete for you -- all you need to do is properly complete the window function!
+
+```
+-- Set up the home team CTE
+WITH home AS (
+  SELECT m.id, t.team_long_name,
+	  CASE WHEN m.home_goal > m.away_goal THEN 'MU Win'
+		   WHEN m.home_goal < m.away_goal THEN 'MU Loss' 
+  		   ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.hometeam_id = t.team_api_id),
+-- Set up the away team CTE
+away AS (
+  SELECT m.id, t.team_long_name,
+	  CASE WHEN m.home_goal > m.away_goal THEN 'MU Loss'
+		   WHEN m.home_goal < m.away_goal THEN 'MU Win' 
+  		   ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.awayteam_id = t.team_api_id)
+-- Select columns and and rank the matches by goal difference
+SELECT DISTINCT
+    date,
+    home.team_long_name AS home_team,
+    away.team_long_name AS away_team,
+    m.home_goal, m.away_goal,
+    RANK() OVER(ORDER BY ABS(home_goal - away_goal) DESC) as match_rank
+-- Join the CTEs onto the match table
+FROM match AS m
+LEFT JOIN home ON m.id = home.id
+LEFT JOIN away ON m.id = away.id
+WHERE m.season = '2014/2015'
+      AND ((home.team_long_name = 'Manchester United' AND home.outcome = 'MU Loss')
+      OR (away.team_long_name = 'Manchester United' AND away.outcome = 'MU Loss'));
+```
+
+
+
 
