@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -30,15 +30,16 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5027bf1c1f92ac6615724d89c8213d6a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-905433ffa22618bb005779f2b23c5ce0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -155,6 +156,16 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#subqueries-in-the-from-clause" id="toc-subqueries-in-the-from-clause" class="nav-link" data-scroll-target="#subqueries-in-the-from-clause">Subqueries in the FROM clause</a></li>
   <li><a href="#subqueries-in-the-from-clause-1" id="toc-subqueries-in-the-from-clause-1" class="nav-link" data-scroll-target="#subqueries-in-the-from-clause-1">Subqueries in the FROM clause</a></li>
   <li><a href="#subqueries-combined" id="toc-subqueries-combined" class="nav-link" data-scroll-target="#subqueries-combined">Subqueries combined</a></li>
+  <li><a href="#correlated-subqueries" id="toc-correlated-subqueries" class="nav-link" data-scroll-target="#correlated-subqueries">Correlated Subqueries</a></li>
+  <li><a href="#nested-subqueries" id="toc-nested-subqueries" class="nav-link" data-scroll-target="#nested-subqueries">Nested subqueries</a></li>
+  </ul></li>
+  <li><a href="#common-table-expressions-ctes" id="toc-common-table-expressions-ctes" class="nav-link" data-scroll-target="#common-table-expressions-ctes">Common Table Expressions (CTEs)</a></li>
+  <li><a href="#deciding-on-techniques" id="toc-deciding-on-techniques" class="nav-link" data-scroll-target="#deciding-on-techniques">Deciding on techniques</a></li>
+  <li><a href="#window-function-for-working-with-aggregate-values" id="toc-window-function-for-working-with-aggregate-values" class="nav-link" data-scroll-target="#window-function-for-working-with-aggregate-values">Window Function for working with aggregate values</a>
+  <ul class="collapse">
+  <li><a href="#over-and-partition-by-calculate-seperate-values-for-different-categories" id="toc-over-and-partition-by-calculate-seperate-values-for-different-categories" class="nav-link" data-scroll-target="#over-and-partition-by-calculate-seperate-values-for-different-categories">OVER and PARTITION BY → calculate seperate values for different categories</a></li>
+  <li><a href="#sliding-windows" id="toc-sliding-windows" class="nav-link" data-scroll-target="#sliding-windows">Sliding windows</a></li>
+  <li><a href="#final-case-study" id="toc-final-case-study" class="nav-link" data-scroll-target="#final-case-study">Final Case Study</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -193,7 +204,7 @@ SQL, or S-Q-L, is short for Structured Query Language. It is the most widely use
 <em>unique identifier (“key”)</em>, identify records in a table to identify this record, often a number, often at the leftest of the table<br>
 <em>query</em> request from data from a database.<br>
 <em>schema (“blue prints”)</em>, shows a database’s design, such as what tables are included in the database and any relationships between its tables. A schema also lets the reader know what data type each field can hold.</p>
-<p><img src="learn-sql-figures/schema.png" alt="Schema" width="400"></p>
+<img src="learn-sql-figures/schema.png" alt="Schema" width="400">
 <p><strong>Good table names manners</strong> table name: lowercase,no spaces <code>_</code> instead, plural or collective group name<br>
 field name: lowercase, no spaces, singular, unique in a table.<br>
 Having more tables, each with a clearly marked subject, is generally better than having fewer tables where information about multiple subjects is combined.</p>
@@ -456,8 +467,7 @@ SELECT(4.0/3.0);</code></pre>
 <p>What’s the difference between using aggregate functions and arithmetic? The key difference is that aggregate functions, like SUM, perform their operations on the fields vertically while arithmetic adds up the records horizontally. Notice that the query’s result doesn’t give us a defined field name. We will always need to use an alias when summarizing data with aggregate functions and arithmetic.</p>
 <pre><code># what is the gap between what a movie has made and a movie had cost?
 SELECT (gross-budget) AS profit
-FROM films;
-</code></pre>
+FROM films;</code></pre>
 <p>Examples.</p>
 <pre><code>#Round duration_hours to two decimal places
 SELECT title, ROUND(duration / 60.0, 2) AS duration_hours
@@ -502,8 +512,7 @@ GROUP BY certification, language;
 #Example with AVG
 SELECT release_year, AVG(duration) AS avg_duration
 FROM films
-GROUP BY release_year;
-</code></pre>
+GROUP BY release_year;</code></pre>
 </section>
 <section id="combine-grouping-and-sorting" class="level3">
 <h3 class="anchored" data-anchor-id="combine-grouping-and-sorting">Combine grouping and sorting</h3>
@@ -651,7 +660,7 @@ LIMIT 10;</code></pre>
 <section id="set-operations" class="level3">
 <h3 class="anchored" data-anchor-id="set-operations">Set Operations</h3>
 <p>SQL has three main set operations, <code>UNION</code>, <code>INTERSECT</code> and <code>EXCEPT</code>. The Venn diagrams shown visualize the differences between them. We can think of each circle as representing a table. The green parts represent what is included after the set operation is performed on each pair of tables.</p>
-<p><img src="learn-sql-figures/venn_diagramms.png" alt="Venn Diagramms" width="400"></p>
+<img src="learn-sql-figures/venn_diagramms.png" alt="Venn Diagramms" width="400">
 <section id="union-and-union-all" class="level4">
 <h4 class="anchored" data-anchor-id="union-and-union-all">Union and Union all</h4>
 <p>– is for adding records together –</p>
@@ -675,7 +684,7 @@ INTERSECT
 SELECT t1.field1, t2.field2
 FROM table_2 AS t2;</code></pre>
 <p>Let’s compare <code>INTERSECT</code> to performing an INNER JOIN on two fields with identical field names. Similar to UNION, for a record to be returned, INTERSECT requires all fields to match, since in set operations we do not specify any fields to match on. This is also why it requires the left and right table to have the same number of columns in order to compare records. In the figure shown, only records where both columns match are returned. In <code>NNER JOIN</code>, similar to INTERSECT, only results where both fields match are returned. INNER JOIN will return duplicate values, whereas INTERSECT will only return common records once. As we know from earlier lessons, INNER JOIN will add more columns to the result set.</p>
-<p><img src="learn-sql-figures/intersect.png" alt="INTERSECT" width="400"></p>
+<img src="learn-sql-figures/intersect.png" alt="INTERSECT" width="400">
 </section>
 <section id="except" class="level3">
 <h3 class="anchored" data-anchor-id="except">Except</h3>
@@ -990,6 +999,472 @@ WHERE season = '2011/2012';</code></pre>
 <section id="subqueries-combined" class="level3">
 <h3 class="anchored" data-anchor-id="subqueries-combined">Subqueries combined</h3>
 <p>Best practices for readability: - formatting your queries - annotate your with <code>/*</code> what it does, use inline comments <code>--</code> - indent your queries for better debugging. Make sure that you clearly indent all information that’s part of a single column, such as a long CASE statement, or a complicated subquery in SELECT. - make sure that your filters are properly placed in every subquery, and the main query, in order to generate accurate results.</p>
+</section>
+<section id="correlated-subqueries" class="level3">
+<h3 class="anchored" data-anchor-id="correlated-subqueries">Correlated Subqueries</h3>
+<p>Correlated subqueries are a special kind of subquery that use values from the outer query in order to generate the final results. The subquery is re-executed each time a new row in the final data set is returned, in order to properly generate each new piece of information.</p>
+<p><strong>Key differences between simple and correlated subqueries</strong><br>
+- simple subqueries can be run independently from the main query, correlated subs are dependent - simple subs only once, correlated ones evalutated in loops - correlated can be used for instance in lieu of of a left join</p>
+<p>Correlated subqueries are useful for matching data across multiple columns.</p>
+</section>
+<section id="nested-subqueries" class="level3">
+<h3 class="anchored" data-anchor-id="nested-subqueries">Nested subqueries</h3>
+<p>Nested subqueries are exactly as they sound – subqueries nested inside other subqueries.</p>
+<p>Example: How does each month’s total goals differ from the monthly average of goals scored?</p>
+<p><strong>Inner subquery</strong> that displays total results from month 1 to 12</p>
+<pre><code>SELECT
+  EXTRACT (MONTH from date) as month,
+  SUM(home_goal + away_goal) AS goals
+  FROM match
+  GROUP BY month;</code></pre>
+<p>Place this to the <strong>outer subquery</strong> to calculate an average of the values generated in the previous table to get the average monthly goals -&gt; place this in the main query for calculating the final data set.</p>
+<pre><code>SELECT AVG(goals) #outer subquery
+FROM (SELECT
+  EXTRACT (MONTH from date) AS month,
+  SUM(home_goal + away_goal) AS goals
+  FROM match
+  GROUP BY month)</code></pre>
+<p>Place the entire nested subquery in the SELECT statement to compare the SUM of goals scored in each month. Here are the first 4 rows of the final query, which generates a sum of goals scored in the month, and a column subtracting the goals scored, from the overall monthly average.</p>
+<pre><code>SELECT
+  EXTRACT(MONTH FROM date) AS month,
+  SUM(m.home_goal + m.away_goal) AS total_goals,
+  SUM(m.home_goal + m.away_goal) =
+  SELECT AVG(goals) #nested subquery begins
+  FROM (SELECT
+  EXTRACT (MONTH from date) AS month,
+  SUM(home_goal + away_goal) AS goals
+  FROM match
+  GROUP BY month) AS s) AS diff # nested subquery ends
+FROM match AS m
+GROUP BY month;</code></pre>
+<p>It’s important to also note that nested queries can be correlated or uncorrelated. Can also be an combination (only inner or outer subquery is correlated).</p>
+</section>
+</section>
+<section id="common-table-expressions-ctes" class="level2">
+<h2 class="anchored" data-anchor-id="common-table-expressions-ctes">Common Table Expressions (CTEs)</h2>
+<ul>
+<li>For improving readability and accessibility</li>
+<li>special type of subquery, that is declared ahead of your main query: Instead of wrapping subqueries inside, say the FROM statement, you name it using the WITH statement, and then reference it by name later in the FROM statement as if it were any other table in your database.</li>
+</ul>
+<p>Example:</p>
+<pre><code># like we've done before:
+SELECT c.name AS country
+COUNT(s.id) AS matches
+FROM country AS c
+  # subquery in the FROM statement
+INNER JOIN (
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal + away_goal) &gt;= 10) AS s
+ON c.id = s.country_id
+GROUP BY country;
+)</code></pre>
+<pre><code>#rewrite with CTE 
+  #subquery in the beginning as a CTE
+WITH s AS(
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal + away_goal) &gt;= 10
+)
+  THEN the rest of the code
+SELECT c.name AS country
+COUNT(s.id) AS matches
+FROM country AS c
+INNER JOIN s 
+ON c.id = s.country_id
+GROUP BY country;</code></pre>
+<p>If you have multiple subqueries that you want to turn into a common table expression, you can simply list them one after another, with a comma in between each CTE, and NO comma after the last one.</p>
+<p>Example:</p>
+<pre><code>#rewrite with CTE 
+  #subquery 1 in the beginning as a CTE
+WITH s1 AS(
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal + away_goal) &gt;= 10), #don't forget the comma
+  #subquery 2, no repition of WITH needed, be attentive of correct denomination of queries
+  s2 AS( 
+  SELECT country_id, id
+  FROM match
+  WHERE (home_goal+away_goal &lt;=1)
+  
+)
+  THEN the rest of the code
+SELECT c.name AS country
+COUNT(s.id) AS matches
+FROM country AS c
+INNER JOIN s 
+ON c.id = s.country_id
+GROUP BY country;</code></pre>
+<p>Why CTEs?</p>
+<ul>
+<li>only executed once &amp; stored in memory</li>
+<li>perfect for organizing long queries - later CTEs can retrieve data produced by former ones - can reference itself with SELF JOIN</li>
+</ul>
+</section>
+<section id="deciding-on-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="deciding-on-techniques">Deciding on techniques</h2>
+<p><strong>Comparision of the techniques</strong></p>
+<p><em>Joins</em></p>
+<ul>
+<li>combine 2</li>
+<li>tables - limitied on simple combinations &amp; aggregations of tables that are already in your data base</li>
+</ul>
+<p><em>Correlated subqueries</em></p>
+<ul>
+<li>match subqueries &amp; tables → simplify syntax, avoid limits of join (not possible to join two separate columns in one table to a single column in another)</li>
+<li>high processing time</li>
+</ul>
+<p><em>Multiple &amp; nested subqueries</em></p>
+<ul>
+<li>improve accuracy &amp; reproducibility</li>
+</ul>
+<p><em>CTE</em></p>
+<ul>
+<li>organization</li>
+<li>referencing as alternative for nested subs</li>
+</ul>
+<p><strong>Which to use? Depends on database/ question</strong></p>
+<ul>
+<li>joins for data bases with more than 1 table (what is the total sales per employee?)</li>
+</ul>
+<pre><code># get team names with subquery &amp; joins
+SELECT
+    m.date,
+    -- Get the home and away team names
+    hometeam,
+    awayteam,
+    m.home_goal,
+    m.away_goal
+FROM match AS m
+
+-- Join the home subquery to the match table
+LEFT JOIN (
+  SELECT match.id, team.team_long_name AS hometeam
+  FROM match
+  LEFT JOIN team
+  ON match.hometeam_id = team.team_api_id) AS home
+ON home.id = m.id
+
+-- Join the away subquery to the match table
+LEFT JOIN (
+  SELECT match.id, team.team_long_name AS awayteam
+  FROM match
+  LEFT JOIN team
+  -- Get the away team ID in the subquery
+  ON match.awayteam_id = team.team_api_id) AS away
+ON away.id = m.id;</code></pre>
+<p>Result is date, hometeam name, awayteam name, home_goal, away_goal.</p>
+<ul>
+<li>correlated subs for matching data from different columns in one or more tables (Who does each employee report to in a company?)</li>
+</ul>
+<pre><code># get the same result as before using correlated subs this time
+SELECT
+    m.date,
+    (SELECT team_long_name
+     FROM team AS t
+     WHERE t.team_api_id = m.hometeam_id) AS hometeam,
+    -- Connect the team to the match table
+    (SELECT team_long_name
+     FROM team AS t
+     WHERE t.team_api_id = m.awayteam_id) AS awayteam,
+    -- Select home and away goals
+     home_goal,
+     away_goal
+FROM match AS m;</code></pre>
+<ul>
+<li>multiple / nested subs for multiple steps of transformation and preparation before generating the final query (What is the average deal size closed by each salesrepresentative in the quarter?)</li>
+<li>CTEs for comparing large number of disparate pieces of information. (How did the marketing, sales, growth &amp; engineering teams perform on key metrics?)</li>
+</ul>
+<pre><code># same result with CTE
+WITH home AS (
+  SELECT m.id, m.date, 
+         t.team_long_name AS hometeam, m.home_goal
+  FROM match AS m
+  LEFT JOIN team AS t 
+  ON m.hometeam_id = t.team_api_id),
+-- Declare and set up the away CTE
+away AS (
+  SELECT m.id, m.date, 
+         t.team_long_name AS awayteam, m.away_goal
+  FROM match AS m
+  LEFT JOIN team AS t 
+  ON m.awayteam_id = t.team_api_id)
+-- Select date, home_goal, and away_goal
+SELECT 
+    home.date,
+    home.hometeam,
+    away.awayteam,
+    home.home_goal,
+    away.away_goal
+-- Join away and home on the id column
+FROM home
+INNER JOIN away
+ON home.id = away.id;</code></pre>
+</section>
+<section id="window-function-for-working-with-aggregate-values" class="level2">
+<h2 class="anchored" data-anchor-id="window-function-for-working-with-aggregate-values">Window Function for working with aggregate values</h2>
+<p>If you try to retrieve additional information without grouping by every single non-aggregate value, your query will return an error. Thus, you can’t compare aggregate values to non-aggregate data. You can work around this limitation using a window function. Window functions are a class of functions that perform calculations on a result set that has already been generated, also referred to as a “window”. You can use window functions to perform aggregate calculations without having to group your data, just as you did with a subquery in SELECT. You can also use them to calculate information such as running totals, rankings, and moving averages.</p>
+<p>Example: How many goals were scored in each match in 11/12 &amp; how did that compare to the average?</p>
+<pre><code>SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# subquery to pass the overall_avg to the summed goals in this season
+  (SELECT AVG(home_goal + away_goal)
+     FROM match
+    WHERE season = '2011/2012') AS overall_avg
+FROM match
+WHERE season = '2011/2012';</code></pre>
+<p>The same results can be generated using the clause common to all window functions – the OVER clause. Instead of writing a subquery, calculate the AVG of home_goal and away_goal, and follow it with the OVER clause. This clause tells SQL to “pass this aggregate value over this existing result set.”</p>
+<pre><code>SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# subquery to pass the overall_avg to the summed goals in this season
+  AVG(home_goal + away_goal) OVER() AS overall_avg
+FROM match
+WHERE season = '2011/2012;</code></pre>
+<p>The results are identical to the previous statement that used a subquery in SELECT, with a simpler syntax and faster processing time.</p>
+<p>Another simple type of column you can generate with a window function is a RANK. A RANK simply creates a column numbering your data set from highest to lowest, or lowest to highest, based on a column that you specify. To create the rank, you start with the RANK function, using parentheses, followed by the OVER clause. Inside the OVER clause, include the ORDER BY clause, and the column or columns you want to use to generate the rank.</p>
+<pre><code># assigning a rank
+SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# add a rank
+  RANK () OVER( ORDERED BY homehoal+ away_goal) AS goals_rank 
+FROM match
+WHERE season = '2011/2012;</code></pre>
+<p>By default, the RANK function orders the results and ranking from smallest to largest values. In the case of our data set here, this isn’t particularly informative. Change the order using the DESC function. You’ll notice that the RANK function automatically ties identical values, such as the first 2 results, and then skips the next value in the rank.</p>
+<pre><code># assigning a rank
+SELECT
+  date,
+  (home_goal _ away_goal) AS goals,
+# add a rank
+  RANK () OVER( ORDER BY homehoal+ away_goal DESC) AS goals_rank 
+FROM match
+WHERE season = '2011/2012;</code></pre>
+<p>There are a few key considerations when using window functions. First, window functions are processed after the entire query except the final ORDER BY statement. Thus, the window function uses the result set to calculate information, as opposed to using the database directly. Second, it’s important to know that window functions are available in PostgreSQL, Oracle, MySQL, but not in SQLite.</p>
+<p>Exercise: Select the league name and average total goals scored from league and match. Complete the window function so it calculates the rank of average goals scored across all leagues in the database. Order the rank by the average total of home and away goals scored.</p>
+<pre><code>SELECT 
+    -- Select the league name and average goals scored
+    l.name AS league,
+    AVG(m.home_goal + m.away_goal) AS avg_goals,
+    -- Rank each league according to the average goals
+    RANK() OVER(ORDER BY AVG(m.home_goal + m.away_goal)) AS league_rank
+FROM league AS l
+LEFT JOIN match AS m 
+ON l.id = m.country_id
+WHERE m.season = '2011/2012'
+GROUP BY l.name
+-- Order the query by the rank you created
+ORDER BY league_rank;</code></pre>
+<section id="over-and-partition-by-calculate-seperate-values-for-different-categories" class="level3">
+<h3 class="anchored" data-anchor-id="over-and-partition-by-calculate-seperate-values-for-different-categories">OVER and PARTITION BY → calculate seperate values for different categories</h3>
+<p>One important statement you can add to your OVER clause is PARTITION BY. A partition allows you to calculate separate values for different categories established in a partition. This is one way to calculate different aggregate values within one column of data, and pass them down a data set, instead of having to calculate them in different columns. The syntax for a partition is fairly simple. Just like before, use an aggregate function to compute a calculation, such as the AVG of the home_goal column. You then add the OVER clause afterward, and inside the parentheses, state PARTITION BY, followed by the column you want to partition the average by. This will then return the overall average for, or PARTITIONed BY each season.</p>
+<pre><code># use an aggregate function to compute a calculation:
+AVG (home_goal) OVER(PARTITION BY season)
+  #return the overall average by each season
+  
+# in a query: How many goals were scored in each match, and how did that compare to the season's average?
+
+SELECT
+  date,
+  (home_goal+away_goal) AS goals,
+  AVG(home_goal+ away_goal) OVER (PARTITION BY season) AS season_avg
+FROM match;</code></pre>
+<p>You can also use PARTITION to calculate values broken out by multiple columns. In the query you see here, the OVER clause contains two columns to partition the AVG goals scored–season, and country. The result set returns the average goals scored broken out by season and country.</p>
+<pre><code>SELECT
+  c.name,
+  m.season,
+  (home_goal+away_goal) AS goals,
+  AVG(home_goal+ away_goal) OVER (PARTITION BY m.season, c.name) AS season_cntry_avg
+FROM country as c
+LEFT JOIN match as m
+ON c.id = m.country_id</code></pre>
+<p>Exercise:</p>
+<p>Construct two window functions partitioning the average of home and away goals by season and month. Filter the dataset by Legia Warszawa’s team ID (8673) so that the window calculation only includes matches involving them.</p>
+<pre><code>SELECT 
+    date,
+    season,
+    home_goal,
+    away_goal,
+    CASE WHEN hometeam_id = 8673 THEN 'home' 
+         ELSE 'away' END AS warsaw_location,
+    -- Calculate average goals partitioned by season and month
+    AVG(home_goal) OVER(PARTITION BY season, 
+            EXTRACT(MONTH FROM date)) AS season_mo_home,
+    AVG(away_goal) OVER(PARTITION BY season, 
+            EXTRACT(MONTH FROM date)) AS season_mo_away
+FROM match
+WHERE 
+    hometeam_id = 8673
+    OR awayteam_id = 8673
+ORDER BY (home_goal + away_goal) DESC;</code></pre>
+</section>
+<section id="sliding-windows" class="level3">
+<h3 class="anchored" data-anchor-id="sliding-windows">Sliding windows</h3>
+<p>Sliding windows are functions that perform calculations relative to the current row of a data set. You can use sliding windows to calculate a wide variety of information that aggregates one row at a time down your data set – running totals, sums, counts, and averages in any order you need. A sliding window calculation can also be partitioned by one or more columns, just like a non-sliding window.</p>
+<p>A sliding window function contains specific functions within the OVER clause to specify the data you want to use in your calculations. The general syntax looks like this:</p>
+<pre><code>ROWS BETWEEN &lt;start&gt; AND &lt;finish&gt; -&gt; indicate that you plan on slicing information in your window function for each row in the data set, and then you specify the starting and finishing point of the calculation
+PRECEDING and FOLLOWING -&gt;  specify the number of rows before, or after, the current row that you want to include in a calculation
+UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING include every row since the beginning, or the end, of the data set in your calculations
+CURRENT ROW stop your calculation at the current row</code></pre>
+<p>For example, the sliding window in this query includes several key pieces of information in its calculation.</p>
+<pre><code>SELECT
+  date,
+  home_goal,
+  away_goal,
+  # get the sum of goals scored when Machester Cit playes as a home team 11/12 season
+  SUM(home_goal)
+  # turn this calculation into a running total, ordered by the date of the match from the oldest to most recent &amp; from the beinning of the data set to the current row
+    OVER (ORDER BY date ROWS BETWEEN
+      UNDBOUNDED PRECEDING AND CURRENT ROW) as running_total
+FROM match
+WHERE hometeam_id =8456 AND season - '2011/2012';</code></pre>
+<p>Your resulting data set looks like this, with a column calculating the total number of goals scored across the season, with a final total listed in the last row.</p>
+<p>Using the PRECEDING statement, you also have the ability to calculate sliding windows with a more limited frame. For example, the query you see here is similar to the previous one, with a slightly modified sliding window. The phrase UNBOUNDED PRECEDING is replaced here with the phrase 1 PRECEDING, which calculates the sum of Manchester City’s goals in the current and previous match.</p>
+<pre><code>SELECT
+  date,
+  home_goal,
+  away_goal,
+  # get the sum of goals scored when Machester Cit playes as a home team 11/12 season
+  SUM(home_goal)
+  # turn this calculation into a running total, ordered by the date of the match from the oldest to most recent &amp; from the beinning of the data set to the current row
+    OVER (ORDER BY date ROWS BETWEEN
+      1 PRECEDING AND CURRENT ROW) as last2
+FROM match
+WHERE hometeam_id =8456 AND season - '2011/2012';</code></pre>
+<p>Exercise: In this exercise, you will expand on the examples discussed in the video, calculating the running total of goals scored by the FC Utrecht when they were the home team during the 2011/2012 season. Do they score more goals at the end of the season as the home or away team?</p>
+<pre><code>SELECT 
+    date,
+    home_goal,
+    away_goal,
+    -- Create a running total and running average of home goals
+    SUM(home_goal) OVER(ORDER BY date 
+         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total,
+    AVG(home_goal) OVER(ORDER BY date 
+         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_avg
+FROM match
+WHERE 
+    hometeam_id = 9908 
+    AND season = '2011/2012';</code></pre>
+<p>In this exercise, you will slightly modify the query from the previous exercise by sorting the data set in reverse order and calculating a backward running total from the CURRENT ROW to the end of the data set (earliest record).</p>
+<pre><code>SELECT 
+    -- Select the date and away goals
+    date,
+    away_goal,
+    -- Create a running total and running average of away goals
+    SUM(away_goal) OVER(ORDER BY date DESC
+         ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS running_total,
+    AVG(away_goal) OVER(ORDER BY date DESC
+         ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS running_avg
+FROM match
+WHERE 
+    awayteam_id = 9908 
+    AND season = '2011/2012';</code></pre>
+</section>
+<section id="final-case-study" class="level3">
+<h3 class="anchored" data-anchor-id="final-case-study">Final Case Study</h3>
+<p>Final question: Who defeated Machester United in the 13/14 season?</p>
+<p>In the following exercises, you will generate a data set that tackles one of the issues we’ve explored during this course – namely, that it’s difficult to retrieve the names of teams who played in a given match. Since this isn’t feasible with joins, we will accomplish it with common table expressions. We’ll also be using CASE statements to categorize the outcomes of matches based on whether or not Manchester United won a particular match. Finally, we’ll be ranking matches by the number of goals they lost the match using a window function.</p>
+<p>Your first task is to create the first query that filters for matches where Manchester United played as the home team. This will become a common table expression in a later exercise.</p>
+<pre><code>SELECT 
+    m.id, 
+    t.team_long_name,
+    -- Identify matches as home/away wins or ties
+    CASE WHEN m.home_goal &gt; m.away_goal THEN 'MU Win'
+        WHEN m.home_goal &lt; m.away_goal THEN'MU Loss'
+        ELSE 'Tie' END AS outcome
+FROM match AS m
+-- Left join team on the home team ID and team API id
+LEFT JOIN team AS t 
+ON m.hometeam_id = t.team_api_id
+WHERE 
+    -- Filter for 2014/2015 and Manchester United as the home team
+    season = '2014/2015'
+    AND t.team_long_name = 'Manchester United';</code></pre>
+<p>Great job! Now that you have a query identifying the home team in a match, you will perform a similar set of steps to identify the away team. Just like the previous step, you will join the match and team tables. Each of these two queries will be declared as a Common Table Expression in the following step.</p>
+<p>The primary difference in this query is that you will be joining the tables on awayteam_id, and reversing the match outcomes in the CASE statement.</p>
+<p>When altering CASE statement logic in your own work, you can reverse either the logical condition (i.e., home_goal &gt; away_goal) or the outcome in THEN – just make sure you only reverse one of the two!</p>
+<pre><code>SELECT 
+    m.id, 
+    t.team_long_name,
+    -- Identify matches as home/away wins or ties
+    CASE WHEN m.home_goal &gt; m.away_goal THEN 'MU Loss'
+        WHEN m.home_goal &lt; m.away_goal THEN 'MU Win'
+        ELSE 'Tie' END AS outcome
+-- Join team table to the match table
+FROM match AS m
+LEFT JOIN team AS t 
+ON m.awayteam_id = t.team_api_id
+WHERE 
+    -- Filter for 2014/2015 and Manchester United as the away team
+    season = '2014/2015'
+    AND t.team_long_name = 'Manchester United';</code></pre>
+<p>Putting the CTEs together:<br>
+Now that you’ve created the two subqueries identifying the home and away team opponents, it’s time to rearrange your query with the home and away subqueries as Common Table Expressions (CTEs). You’ll notice that the main query includes the phrase, SELECT DISTINCT. Without identifying only DISTINCT matches, you might return a duplicate record for each game played.</p>
+<p>Continue building the query to extract all matches played by Manchester United in the 2014/2015 season.</p>
+<pre><code>-- Set up the home team CTE
+WITH home AS (
+  SELECT m.id, t.team_long_name,
+      CASE WHEN m.home_goal &gt; m.away_goal THEN 'MU Win'
+           WHEN m.home_goal &lt; m.away_goal THEN 'MU Loss' 
+           ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.hometeam_id = t.team_api_id),
+-- Set up the away team CTE
+away AS (
+  SELECT m.id, t.team_long_name,
+      CASE WHEN m.home_goal &gt; m.away_goal THEN 'MU Loss'
+           WHEN m.home_goal &lt; m.away_goal THEN 'MU Win' 
+           ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.awayteam_id = t.team_api_id)
+-- Select team names, the date and goals
+SELECT DISTINCT
+    m.date,
+    home.team_long_name AS home_team,
+    away.team_long_name AS away_team,
+    m.home_goal,
+    m.away_goal
+-- Join the CTEs onto the match table
+FROM match AS m
+LEFT JOIN home ON m.id = home.id
+LEFT JOIN away ON m.id = away.id
+WHERE m.season = '2014/2015'
+      AND (home.team_long_name = 'Manchester United' 
+           OR away.team_long_name = 'Manchester United');</code></pre>
+<p><em>Add a window function:</em> Fantastic! You now have a result set that retrieves the match date, home team, away team, and the goals scored by each team. You have one final component of the question left – how badly did Manchester United lose in each match?</p>
+<p>In order to determine this, let’s add a window function to the main query that ranks matches by the absolute value of the difference between home_goal and away_goal. This allows us to directly compare the difference in scores without having to consider whether Manchester United played as the home or away team!</p>
+<p>The equation is complete for you – all you need to do is properly complete the window function!</p>
+<pre><code>-- Set up the home team CTE
+WITH home AS (
+  SELECT m.id, t.team_long_name,
+      CASE WHEN m.home_goal &gt; m.away_goal THEN 'MU Win'
+           WHEN m.home_goal &lt; m.away_goal THEN 'MU Loss' 
+           ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.hometeam_id = t.team_api_id),
+-- Set up the away team CTE
+away AS (
+  SELECT m.id, t.team_long_name,
+      CASE WHEN m.home_goal &gt; m.away_goal THEN 'MU Loss'
+           WHEN m.home_goal &lt; m.away_goal THEN 'MU Win' 
+           ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.awayteam_id = t.team_api_id)
+-- Select columns and and rank the matches by goal difference
+SELECT DISTINCT
+    date,
+    home.team_long_name AS home_team,
+    away.team_long_name AS away_team,
+    m.home_goal, m.away_goal,
+    RANK() OVER(ORDER BY ABS(home_goal - away_goal) DESC) as match_rank
+-- Join the CTEs onto the match table
+FROM match AS m
+LEFT JOIN home ON m.id = home.id
+LEFT JOIN away ON m.id = away.id
+WHERE m.season = '2014/2015'
+      AND ((home.team_long_name = 'Manchester United' AND home.outcome = 'MU Loss')
+      OR (away.team_long_name = 'Manchester United' AND away.outcome = 'MU Loss'));</code></pre>
 
 
 </section>
@@ -998,236 +1473,242 @@ WHERE season = '2011/2012';</code></pre>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/EddaBra\.github\.io\/sql-cheat-sheet\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
+      return false;
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/EddaBra\.github\.io\/sql-cheat-sheet\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
         }
-        return container.innerHTML
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1235,185 +1716,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 
 
